@@ -6,7 +6,7 @@
 *
 *
 DEFINE CLASS basecustom AS custom 
- 	*< CLASSDATA: Baseclass="custom" Timestamp="2022/11/28 09:57:26" Scale="Pixels" Uniqueid="" />
+ 	*< CLASSDATA: Baseclass="custom" Timestamp="" Scale="Pixels" Uniqueid="" />
 
 	#INCLUDE "gotodefinition.h"
 	*<DefinedPropArrayMethod>
@@ -52,7 +52,7 @@ DEFINE CLASS basecustom AS custom
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	HIDDEN height,helpcontextid
+	HIDDEN Height,HelpContextID
 	lreleaseondestroy = .F.
 	Name = "basecustom"
 	opemeditor = .NULL.
@@ -1138,7 +1138,7 @@ DEFINE CLASS basecustom AS custom
 		loTopOfForm	 = This.FindTopMostParent ()
 		lcObjectName = This.GetObjectPath(m.loObject)
 		
-		lcWindowName = 'Inherited ' + m.loTopOfForm.Name + m.lcObjectName + '.' + m.lcMethodName + '.' + Substr(Sys(2015), 2) + '.PRG'
+		lcWindowName = 'Inherited ' + m.loTopOfForm.Name + m.lcObjectName + '.' + m.lcMethodName + Sys(2015) + '.PRG'
 		lcFileName	 = Sys(2023) + '\' + m.lcWindowName
 		
 		Strtofile (m.lcText, m.lcFileName, 0)
