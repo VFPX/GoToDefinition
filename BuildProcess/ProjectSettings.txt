@@ -1,0 +1,7 @@
+AppName   = GoToDefinition
+AppID     = GoToDefinition
+Version   = 2.0
+Component = No
+
+ChangeLog      = Change Log.md
+Bin2PRGFolder  = InstalledFiles

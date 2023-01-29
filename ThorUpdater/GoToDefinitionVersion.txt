@@ -1,0 +1,34 @@
+lparameters toUpdateObject
+
+with toUpdateObject
+	.VersionNumber    = '2.0 - 20230129'
+	.AvailableVersion = 'GoToDefinition-2.0-update-20230129'
+	.Component        = 'No'
+	.Notes            = GetNotes()
+endwith
+return toUpdateObject
+
+* Get the notes for the project.
+
+procedure GetNotes
+local lcNotes
+text to lcNotes noshow
+
+### 2023-02-04, Version 2 ###
+
+* If IntellisenseX can give the list, GTD can go to it
+* Bookmarks
+    * Tool "Cycle"
+    * Tool "Toggle"
+    * When they are removed
+    
+* If name of an object that currently exists, use Object Explorer
+* Open "Add property or method window" if either:
+    * No name selected in current code window
+    * or current window is not a code window
+--- 
+Last changed: _2023-01-29_ ![Picture](./documents/Images/vfpxpoweredby_alternative.gif)
+
+
+endtext
+return lcNotes
