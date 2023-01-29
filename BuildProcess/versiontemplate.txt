@@ -1,0 +1,18 @@
+lparameters toUpdateObject
+
+with toUpdateObject
+	.VersionNumber    = '{VERSION} - {VERSIONDATE}'
+	.AvailableVersion = '{APPNAME}-{VERSION}-update-{VERSIONDATE}'
+	.Component        = '{COMPONENT}'
+	.Notes            = GetNotes()
+endwith
+return toUpdateObject
+
+* Get the notes for the project.
+
+procedure GetNotes
+local lcNotes
+text to lcNotes noshow
+{CHANGELOG}
+endtext
+return lcNotes
