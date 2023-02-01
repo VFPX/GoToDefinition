@@ -1,4 +1,4 @@
-# How to contribute to IntellisenseX
+# How to contribute to GoToDefinition
 
 ## Bug report?
 - Please check [issues](https://github.com/VFPX/ObjectExplorer/issues) if the bug is reported
@@ -30,4 +30,4 @@ Here are the steps to updating to a new version:
 10. Create a pull request
 
 ---
-Last changed: _2023/01/27_ ![Picture](../Docs/Images/vfpxpoweredby_alternative.gif)
+Last changed: _2023/01/29_ ![Picture](../documents/Images/vfpxpoweredby_alternative.gif)
