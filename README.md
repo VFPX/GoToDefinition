@@ -8,10 +8,13 @@ Version 2.0 Released 2023-02-04
 
 
 ## Introduction
-Go To Definition (GTD), modeled after "Go to Definition" (F12) in Visual Studio, allows you to point to a name that is referenced in your code, and go to (that is, display and/or edit) its definition. It can be used to create new methods and properties in a form or class.
+Go To Definition (GTD), modeled after "Go to Definition" (F12) in Visual Studio, allows you to point to a name that is referenced in your code, and go to (that is, display and/or edit) its definition. It can also be used to create new methods and properties in a form or class.
 The mechanics are simple:
 * Click on the name (in almost all cases, no need to highlight it.)
 * Run GTD. 
+
+The intent of GTD is that it can search for any name where you can imagine that a definition could be found programmatically; that is, without reading your mind.  And there's no penalty (other than a few wasted seconds) if it's unsuccessful.
+
 
 ### What's in a name?
 The “name” that is searched for is determined as follows:
@@ -27,22 +30,20 @@ The third rule means that GTD handles WITH statements as hoped for.  The example
 
 #### What you can search for
 
-The intent of GTD is that you can search for any name where you can imagine that a definition could be found programmatically; that is, without reading your mind.  And there's no penalty (other than a few wasted seconds) if it's unsuccessful.
 
-With this in mind, here's a summary:
 * Simple names (that look like valid variable names):
-	* File Name, extensions looked for
+	* File name with any of these extensions
 		* PRG
 		* SCX
 		* VCX
 		* FRX
-	* Name of a procedure in a PRG
+	* Name of a procedure or function in a PRG
 	* Alias of a table that is open
 	* Alias of a table that can be opened (possibly augmented by customization)
 	* Name of an existing object
 	* Name of an object defined by any of:
 		* NEWOBJECT
-		* CREATEOJECT
+		* CREATEOBJECT
 		* LOCAL
 	* Name of an object defined in Alias Dictionary
 	* Constants (from #Include and #Define)
@@ -98,7 +99,7 @@ In some cases, a name being searched for may not be unique.  You might, for inst
 #### Search Order
 
 GTD searches more than less in the same order that people search for things --
-1. Searches that don't take to* long.
+1. Searches that don't take too long.
 2. Searches for things you're most likely to be looking for. 
 
 This is tempered somewhat as there are a few cases where the searches must be done in a specific order.
