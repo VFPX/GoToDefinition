@@ -42,7 +42,7 @@ Customizable to handle names other than those mentioned above; for instance, to 
 		* For public tools, such as PEM Editor, etc.
 		.Category = 'Go To'
 		.Source	  = 'IDE Tools' && Deprecated; use .Category instead
-		.Version  = 'GoToDefinition V2 - November 28, 2022' 
+		.Version  = 'GoToDefinition V2' 
 		.Sort	  = -1 && the sort order for all items from the same .Source
 		.PlugIns  = 'GetDefaultValue, GetNewMethodHeader, GoToDefinition'
 	Endwith

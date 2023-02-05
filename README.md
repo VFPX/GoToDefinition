@@ -72,7 +72,7 @@ The effect is that you can simply click before the first character of the name, 
     * Name of an object that is open
 	* Name of an object defined by any of:
 	    * NEWOBJECT
-		* CREATEObJECT
+		* CREATEOBJECT
 		* LOCAL
 	* Name of an object defined in Alias Dictionary
  
@@ -98,7 +98,7 @@ In some cases, a name being searched for may not be unique.  You might, for inst
 
 #### Search Order
 
-GTD searches in a similar way that people might search for things --
+GTD searches in a way similar to how people might search for things --
 1. Searches that don't take too long.
 2. Searches for things you're most likely to be looking for. 
 
@@ -110,7 +110,14 @@ Unfortunately, for code windows within VCXs and SCXs, there is not much informat
 *   If you have more than one VCX or SCX open, it's not possible to determine which VCX or SCX a code window belongs to (!)  GTD assumes that it belongs to the "active" one that shows up in PEMEditor or the Property Window.
 *   The only information available to understand what "This" refers to is in the method's titlebar. If the name in the titlebar is not unique, GTD may use the incorrect object.
 
-Incidentally, these same problems occur in ISX.
+Incidentally, these same problems occur in [IntelliSenseX](https://github.com/VFPX/IntelliSenseX).
+
+#### Bookmarks (leaving breadcumbs)
+ GTD creates bookmarks each time it is used, one placed where GTD was invoked and one at its destination (if in a code window).  Two new Thor tools work with these bookmarks:
+ * **Cycle Bookmarks** takes you through all your current bookmarks.
+ * **Add/Remove BookMark** will add a bookmark at the current location if there isn't one there or remove the current bookmark if there is.
+ 
+ Bookmarks are defined by the window (not its contents) and the cursor position in that window.  They are automatically removed when the window is closed.  Also, they may be out of sync if the code in the window above the bookmark cursor position has been modified.
 
 #### Origins
 This project began in early 2010 when Matt Slay suggested to Jim Nelson that a tool Matt had seen in Visual Studio, using F12 for "to to definition", might be of value if implemented in FoxPro.  It evolved along a familiar path, with concepts and enhancements coming from continual discussions between Matt and Jim, and eventual implementation by Jim.
