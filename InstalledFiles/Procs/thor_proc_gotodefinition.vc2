@@ -19,6 +19,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		*m: getclassfilename
 		*m: getcodeorvalue
 		*m: getcurrenthighlightedtext
+		*m: getentireline
 		*m: getinheritedcode
 		*m: getobjectparentclasses
 		*m: getwindowname
@@ -175,6 +176,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		<memberdata name="cstackline" display="cStackLine"/>
 		<memberdata name="handleopenedfilename" display="HandleOpenedFileName"/>
 		<memberdata name="gotodeffindstem" display="GoToDefFindStem"/>
+		<memberdata name="getentireline" display="GetEntireLine"/>
 		</VFPData>
 	
 	PROCEDURE addmethodwithparameters
@@ -507,6 +509,17 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		Endif
 		Return m.lcResult
 		
+	ENDPROC
+
+	PROCEDURE getentireline
+		Lparameters lnPos
+		
+		Local lnEndPos, lnStartPos
+		
+		lnStartPos = This.oEditorWin.GetLineStart(m.lnPos, 0)
+		lnEndPos   = This.oEditorWin.GetLineStart(m.lnPos, 1)
+		
+		Return This.oEditorWin.GetString(m.lnStartPos, m.lnEndPos)
 	ENDPROC
 
 	PROCEDURE getinheritedcode
@@ -1059,9 +1072,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		Local laWords[1], lcCLass, lcClassLib, lcCommand, lcDoubles, lcFullName, lcQuote, lnEndPos
 		Local lnStartPos, lnWordCount
 		
-		lnStartPos = This.oEditorWin.GetLineStart (This.nRightHighlightPos, 0)
-		lnEndPos   = This.oEditorWin.GetLineStart (This.nRightHighlightPos, 1)
-		lcCommand  = This.oEditorWin.GetString (m.lnStartPos, m.lnEndPos)
+		lcCommand = This.GetEntireLine(This.nRightHighlightPos)
 		
 		lcDoubles = Strextract(m.lcCommand, '{{', '}}')
 		If Empty(m.lcDoubles) Or Not Upper(Getwordnum(m.lcDoubles, 1, ' =' + Tab)) == Upper(m.lcMethodName)
@@ -1820,6 +1831,11 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		If m.lcObjectName == Chrtran(m.lcObjectName, ':\ ', '')
 		
 			Do Case
+					* ignore these two special cases
+				Case 'THIS' == Upper(m.lcObjectName) or 'THISFORM' == Upper(m.lcObjectName)
+					This.lFound	   = .F.
+					This.lSearched = .F.
+		
 					* pointing to name of an existing object
 				Case (Not '.' $ m.lcObjectName) and 'O' = Type(m.lcObjectName) And 'O' = Vartype(&lcObjectName)
 					Execscript(_Screen.cThorDispatcher, 'Thor_Tool_ObjectExplorer', &lcObjectName)
@@ -1913,20 +1929,22 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 				* DO FORM and REPORT FORM
 			Otherwise
-				lnStartPos = This.oEditorWin.GetLineStart (This.nLeftHighlightPos, 0)
-				lcText	   = This.oEditorWin.GetString (m.lnStartPos, This.nLeftHighlightPos - 1)
-				Do Case
-					Case Getwordcount (m.lcText) # 2
+				
+				*!* ******** JRN Removed 2023-02-02 ********
+				*!* lcText = This.GetEntireLine(This.nLeftHighlightPos)
 		
-					Case Upper (Getwordnum (m.lcText, 1)) == 'DO'		;
-							And Upper (Getwordnum (m.lcText, 2)) == 'FORM'
-						This.lFound	   = This.GoToDefFindFile (Forceext (This.cMethodName, 'SCX'))
-						This.lSearched = This.lFound
-					Case Upper (Getwordnum (m.lcText, 1)) == 'REPORT'		;
-							And Upper (Getwordnum (m.lcText, 2)) == 'FORM'
-						This.lFound	   = This.GoToDefFindFile (Forceext (This.cMethodName, 'FRX'))
-						This.lSearched = This.lFound
-				Endcase
+				*!* Do Case
+				*!* 	Case Getwordcount (m.lcText) # 2
+		
+				*!* 	Case Upper (Getwordnum (m.lcText, 1)) == 'DO'		;
+				*!* 			And Upper (Getwordnum (m.lcText, 2)) == 'FORM'
+				*!* 		This.lFound	   = This.GoToDefFindFile (Forceext (This.cMethodName, 'SCX'))
+				*!* 		This.lSearched = This.lFound
+				*!* 	Case Upper (Getwordnum (m.lcText, 1)) == 'REPORT'		;
+				*!* 			And Upper (Getwordnum (m.lcText, 2)) == 'FORM'
+				*!* 		This.lFound	   = This.GoToDefFindFile (Forceext (This.cMethodName, 'FRX'))
+				*!* 		This.lSearched = This.lFound
+				*!* Endcase
 		
 		Endcase
 		
@@ -2202,23 +2220,32 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		Lparameters llOnlyIfFormOrClass
 		
 		Local loForm As Object
-		Local laObjects[1], lnI
+		Local laObjects[1], lcFile, lnI, loTools
 		
-		If llOnlyIfFormOrClass And 0 = Aselobj(laObjects) And 0 = Aselobj(laObjects, 1)
+		If m.llOnlyIfFormOrClass And 0 = Aselobj(laObjects) And 0 = Aselobj(laObjects, 1)
 			Return
 		Endif
 		
 		For lnI = 1 To _Screen.FormCount
-			loForm = _Screen.Forms[lnI]
-			If Pemstatus(loForm, 'lAskAddPEM', 5) And loForm.lAskAddPEM
-				loForm.Show()
+			loForm = _Screen.Forms[m.lnI]
+			If Pemstatus(m.loForm, 'lAskAddPEM', 5) And m.loForm.lAskAddPEM
+				m.loForm.Show()
 				loForm = .Null.
 				Return
 			Endif
 		Endfor
+		loForm	= .Null.
 		
-		loForm = .Null.
-		Do Form AskAddPEMNewStayOpen With, .T., , .T.  
+		*** JRN 2023-01-30 : Form to add PEMs in same folder as this class
+		loTools	= Execscript (_Screen.cThorDispatcher, 'Class= tools from pemeditor')
+		If Isnull(m.loTools)
+			Return
+		Endif
+		lcFile = Forcepath('AskAddPEMNewStayOpen.SCX', Justpath(m.loTools.ClassLibrary))
+		If File(m.lcFile)
+			Do Form (m.lcFile) With, .T., , .T.
+		Endif
+		
 	ENDPROC
 
 	PROCEDURE readme
@@ -2366,7 +2393,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 			Otherwise
 				llFailed = ccRecordTimings .T.
-				Messagebox (Strtran (ccLOC_Cap_DefNotFound, '<insert>', This.cFullMethodName), 16, ccLOC_Title_DefNotFound, 5000)
+				Messagebox (Strtran (ccLOC_Cap_DefNotFound, '<insert>', This.cFullMethodName), 16, ccLOC_Title_DefNotFound, 2500)
 		
 		Endcase
 		

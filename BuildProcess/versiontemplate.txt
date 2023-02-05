@@ -2,7 +2,7 @@ lparameters toUpdateObject
 
 with toUpdateObject
 	.VersionNumber    = '{VERSION} - {VERSIONDATE}'
-	.AvailableVersion = '{APPNAME}-{VERSION}-update-{VERSIONDATE}'
+	.AvailableVersion = '{APPNAME}-{VERSION}-{JULIAN}-{VERSIONDATE}'
 	.Component        = '{COMPONENT}'
 	.Notes            = GetNotes()
 endwith

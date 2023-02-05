@@ -22,9 +22,9 @@ The “name” that is searched for is determined as follows:
 2. All characters to the left of the cursor (or of the selected text, if any) that can be part of a name, _including periods_, are included. 
 3. If the leftmost character is a period and is only preceded by whitespace, then the preceding code is examined looking for WITH statements.  This is done repeatedly, handling embedded WITHs. 
 
-The effect of the first two rules is that you can simply click before the first character of the name, after the last character, or any place in between. 
+The effect is that you can simply click before the first character of the name, after the last character, or any place in between. GTD will look for the appropriate Property or method, even when the reference is inside a With statement.
 
-The third rule means that GTD handles WITH statements as hoped for.  The example below demonstrates all of these rules, as the name being searched for is `This.Frame.Pg1.cboStates`.
+ The example below demonstrates all of these rules, as the name being searched for is `This.Frame.Pg1.cboStates`.
 
 ![](documents/Images/Embedded%20Withs.png)
 
@@ -72,16 +72,16 @@ The third rule means that GTD handles WITH statements as hoped for.  The example
     * Name of an object that is open
 	* Name of an object defined by any of:
 	    * NEWOBJECT
-		* CREATEObJECT
+		* CREATEOBJECT
 		* LOCAL
 	* Name of an object defined in Alias Dictionary
  
-For flie names with special characters (extension, drive, backslash, etc.), the entire file name must be highlighted (and you can include the quotes.)
+For file names with special characters (extension, drive, backslash, etc.), the entire file name must be highlighted (and you can include the quotes.)
 
 
 #### Where does it look?
 
-GTD looks in all the places you would hope, including:
+GTD looks in many locations, including:
 *   The current code window
 *   The current folder
 *   The search path
@@ -94,23 +94,30 @@ GTD looks in all the places you would hope, including:
 
 #### Name Conflicts
 
-In some cases, a name being searched for may not be unique.  You might, for instance have a table named "Admin", as well as a form, report, class, and class library of the same name.  GTD is happy to stop after the first one it finds.
+In some cases, a name being searched for may not be unique.  You might, for instance have a table named "Admin", as well as a form, report, class, and class library of the same name.  GTD will stop searching after the first one it finds.
 
 #### Search Order
 
-GTD searches more than less in the same order that people search for things --
+GTD searches in a way similar to how people might search for things --
 1. Searches that don't take too long.
 2. Searches for things you're most likely to be looking for. 
 
-This is tempered somewhat as there are a few cases where the searches must be done in a specific order.
+This is tempered somewhat by a few cases where the searches must be done in a specific order.
 
 #### Confusion with "ThisForm" and "This"
 
-Unfortunately, for code windows for VCXs and SCXs, there is not much information that can be gleaned about the origin of the window, other than what is available in the titlebar. GTD may misbehave in a couple of different ways due to this problem:
+Unfortunately, for code windows within VCXs and SCXs, there is not much information that can be gleaned about the origin of the window, other than what is available in the titlebar. GTD may misbehave in a couple of different ways due to this problem:
 *   If you have more than one VCX or SCX open, it's not possible to determine which VCX or SCX a code window belongs to (!)  GTD assumes that it belongs to the "active" one that shows up in PEMEditor or the Property Window.
-*   The only information available to understand what "This" refers to is in the method's titlebar. If the name in the titlebar is not unique, GTD may well use the incorrect object.
+*   The only information available to understand what "This" refers to is in the method's titlebar. If the name in the titlebar is not unique, GTD may use the incorrect object.
 
-Incidentally, these same problems occur in ISX.
+Incidentally, these same problems occur in [IntelliSenseX](https://github.com/VFPX/IntelliSenseX).
+
+#### Bookmarks (leaving breadcumbs)
+ GTD creates bookmarks each time it is used, one placed where GTD was invoked and one at its destination (if in a code window).  Two new Thor tools work with these bookmarks:
+ * **Cycle Bookmarks** takes you through all your current bookmarks.
+ * **Add/Remove BookMark** will add a bookmark at the current location if there isn't one there or remove the current bookmark if there is.
+ 
+ Bookmarks are defined by the window (not its contents) and the cursor position in that window.  They are automatically removed when the window is closed.  Also, they may be out of sync if the code in the window above the bookmark cursor position has been modified.
 
 #### Origins
 This project began in early 2010 when Matt Slay suggested to Jim Nelson that a tool Matt had seen in Visual Studio, using F12 for "to to definition", might be of value if implemented in FoxPro.  It evolved along a familiar path, with concepts and enhancements coming from continual discussions between Matt and Jim, and eventual implementation by Jim.

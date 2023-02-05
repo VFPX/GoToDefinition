@@ -16,6 +16,7 @@ If Pcount() = 1								;
 		.Source			 = 'Thor Repository'
 		.Category		 = 'Go To'
 		.Author			 = 'Jim Nelson'
+		.Version 		 = 'GoToDefinition V2' 
 		.CanRunAtStartUp = .F.
 	Endwith
 
