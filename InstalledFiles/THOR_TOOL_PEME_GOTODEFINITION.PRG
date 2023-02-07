@@ -1,4 +1,3 @@
-* Registered with Thor: 11/11/22 01:58:35 PM
 Lparameters lxParam1
 
 ****************************************************************
@@ -43,6 +42,7 @@ Customizable to handle names other than those mentioned above; for instance, to 
 		.Category = 'Go To'
 		.Source	  = 'IDE Tools' && Deprecated; use .Category instead
 		.Version  = 'GoToDefinition V2' 
+		.Link 	  = 'https://github.com/VFPX/GoToDefinition'
 		.Sort	  = -1 && the sort order for all items from the same .Source
 		.PlugIns  = 'GetDefaultValue, GetNewMethodHeader, GoToDefinition'
 	Endwith

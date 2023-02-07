@@ -248,7 +248,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		lcNewName = Execscript (_Screen.cThorDispatcher, 'Thor_Proc_GetThorTableAlias', This.cMethodName)
 		If Vartype(m.lcNewName) = 'C'
 			loObject = Execscript(_Screen.cThorDispatcher, 'THOR_PROC_ISX_GetNewObject', m.lcNewName)
-			If Vartype(m.loObject) = 'O'
+			If Vartype(m.loObject) = 'O' and PemStatus(loObject, 'Class', 5)
 				This.GoToClassByName(@m.loObject)
 				Return .T.
 			Endif
@@ -260,7 +260,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 			lcNewName = Execscript (_Screen.cThorDispatcher, 'Thor_Proc_GetThorTableAlias', m.lcObject)
 			If Vartype(m.lcNewName) = 'C'
 				loObject = Execscript(_Screen.cThorDispatcher, 'THOR_PROC_ISX_GetNewObject', m.lcNewName)
-				If Vartype(m.loObject) = 'O'
+				If Vartype(m.loObject) = 'O' and PemStatus(loObject, 'Class', 5)
 					This.GoToClassByName(@m.loObject, m.lcMethod)
 					Return .T.
 				Endif
@@ -1718,7 +1718,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 		If '.' $ m.lcMethodName
 			loObject = Execscript(_Screen.cThorDispatcher, 'Thor_Proc_ISX', .F., .F., .F., .F., .F., .F., .T., Juststem(m.lcMethodName))
-			If Vartype(m.loObject) = 'O'
+			If Vartype(m.loObject) = 'O' and PemStatus(loObject, 'Class', 5)
 				lcClass	   = m.loObject.Class
 				lcClassLib = m.loObject.ClassLibrary
 				lcMethod   = Justext(m.lcMethodName)
@@ -1727,7 +1727,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 		If Empty(m.lcClass)
 			loObject = Execscript(_Screen.cThorDispatcher, 'Thor_Proc_ISX', .F., .F., .F., .F., .F., .F., .T., m.lcMethodName)
-			If Vartype(m.loObject) = 'O'
+			If Vartype(m.loObject) = 'O' and PemStatus(loObject, 'Class', 5)
 				lcClass	   = m.loObject.Class
 				lcClassLib = m.loObject.ClassLibrary
 			Endif
@@ -2391,9 +2391,9 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 				This.lFound	   = .T.
 				This.lSearched = .T.
 		
-			Otherwise
+			Otherwise 
 				llFailed = ccRecordTimings .T.
-				Messagebox (Strtran (ccLOC_Cap_DefNotFound, '<insert>', This.cFullMethodName), 16, ccLOC_Title_DefNotFound, 2500)
+				Messagebox (Strtran (ccLOC_Cap_DefNotFound, '<insert>', This.cFullMethodName), 16, ccLOC_Title_DefNotFound, cnMB_TimeOut)
 		
 		Endcase
 		

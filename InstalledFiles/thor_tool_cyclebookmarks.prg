@@ -16,7 +16,8 @@ If Pcount() = 1								;
 		.Source			 = 'Thor Repository'
 		.Category		 = 'Go To'
 		.Author			 = 'Jim Nelson'
-		.Version 		 = 'GoToDefinition V2' 
+		.Version		 = 'GoToDefinition V2'
+		.Link			 = 'https://github.com/VFPX/Thor/blob/master/Docs/NewsItems/Item_48.md'
 		.CanRunAtStartUp = .F.
 	Endwith
 
