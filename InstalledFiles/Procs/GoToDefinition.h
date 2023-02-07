@@ -1,3 +1,5 @@
+#Include GoToDefinitionVersion.h
+
 * characters
 #Define CR               	Chr(13)
 #Define LF               	Chr(10)
@@ -35,7 +37,8 @@
 #DEFINE MB_DEFBUTTON3           512     && Third button is default
 #DEFINE MB_SYSTEMMODAL          4096    && System Modal
 
-#Define ccLOC_Title_DefNotFound			"Go-To-Definition: not found"
+#Define cnMB_Timeout					4000	&& 4 seconds
+#Define ccLOC_Title_DefNotFound			VERSION_NUMBER
 #Define ccLOC_Cap_DefNotFound			"Definition for '<insert>' not found.     "
 
 #Define 	CommandWindow	0
