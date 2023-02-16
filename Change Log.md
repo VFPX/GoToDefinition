@@ -1,4 +1,9 @@
 
+### 2023-02-15, Version 2.0 ###
+
+* Bug fix for this problem:  Type This.Something(), then press F12, nothing happens)
+
+
 ### 2023-02-04, Version 2.0 ###
 
 This version is a complete refactoring of the original Go To Definition (GTD). The code was created before we had Thor, so it was embedded into the older PEMEditor App. This, along with the fact that GTD evolved incrementally over a long period of time, made it a prime candidate for refactoring. GTD is now a standalone tool, simplifying the tasks of updating or documenting. All of the original features of GTD should work as they have always had, with the following enhancements:

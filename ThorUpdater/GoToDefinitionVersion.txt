@@ -1,8 +1,8 @@
 lparameters toUpdateObject
 
 with toUpdateObject
-	.VersionNumber    = '2.0 - 20230206'
-	.AvailableVersion = 'GoToDefinition-2.0-08437-20230206'
+	.VersionNumber    = '2.01 - 20230215'
+	.AvailableVersion = 'GoToDefinition-2.01-08446-20230215'
 	.Component        = 'No'
 	.Notes            = GetNotes()
 endwith
@@ -13,6 +13,11 @@ return toUpdateObject
 procedure GetNotes
 local lcNotes
 text to lcNotes noshow
+
+### 2023-02-15, Version 2.0 ###
+
+* Bug fix, to fix this report:  Type This.Something(), then press F12, nothing happens)
+
 
 ### 2023-02-04, Version 2.0 ###
 
