@@ -356,7 +356,7 @@ DEFINE CLASS addpem AS form
 		DoDefault()
 		
 		With This
-			.oTools	   = Execscript(_Screen.cThorDispatcher, 'Class= tools from pemeditor')
+			.oTools	   = Execscript(_Screen.cThorDispatcher, 'Class= tools from pemeditor')	
 			.oSettings = Execscript(_Screen.cThorDispatcher, 'Class= ThorFormSettings', 'Add PEM')
 			.oSettings.Restore(Thisform, 'Height, Width, Top, Left')
 		Endwith
@@ -371,15 +371,14 @@ DEFINE CLASS addpem AS form
 		
 			Do Case
 				Case Not 'P' $ .cPEMType
-					.Caption = 'Add new method?'
+					.Caption = 'Add new method'
 				Case Not 'M' $ .cPEMType
-					.Caption = 'Add new property?'
+					.Caption = 'Add new property'
+				Otherwise 
+					.Caption = 'Add new property or method'
 			Endcase
 		
 			.BindControls  = .T.
-		
-			loSettings = Execscript (_Screen.cThorDispatcher, 'class= ThorFormSettings', Thisform)
-			m.loSettings.AlignToCursor(Thisform, .T., 100, -50)
 		
 			.Refresh()
 		Endwith
