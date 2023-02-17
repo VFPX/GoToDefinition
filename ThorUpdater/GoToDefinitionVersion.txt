@@ -1,8 +1,8 @@
 lparameters toUpdateObject
 
 with toUpdateObject
-	.VersionNumber    = '2.011 - 20230217'
-	.AvailableVersion = 'GoToDefinition-2.011-08448-20230217'
+	.VersionNumber    = '2.012 - 20230217'
+	.AvailableVersion = 'GoToDefinition-2.012-08448-20230217'
 	.Component        = 'No'
 	.Notes            = GetNotes()
 endwith
@@ -14,7 +14,7 @@ procedure GetNotes
 local lcNotes
 text to lcNotes noshow
 
-### 2023-02-17, Version 2.011 ###
+### 2023-02-17, Version 2.012 ###
 
 * Position and size of form to add new PEMs is persistent.
 

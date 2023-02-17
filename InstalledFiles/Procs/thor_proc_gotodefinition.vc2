@@ -2219,32 +2219,37 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 	PROCEDURE quickaddpem
 		Lparameters llOnlyIfFormOrClass
 		
-		Local loForm As Object
-		Local laObjects[1], lcFile, lnI, loTools
+		This.DoFormAddPEM('', .T., '', .F., '')
 		
-		If m.llOnlyIfFormOrClass And 0 = Aselobj(laObjects) And 0 = Aselobj(laObjects, 1)
-			Return
-		Endif
+		Return
 		
-		For lnI = 1 To _Screen.FormCount
-			loForm = _Screen.Forms[m.lnI]
-			If Pemstatus(m.loForm, 'lAskAddPEM', 5) And m.loForm.lAskAddPEM
-				m.loForm.Show()
-				loForm = .Null.
-				Return
-			Endif
-		Endfor
-		loForm	= .Null.
+		*!* ******** JRN Removed 2023-02-17 ********
+		*!* Local loForm As Object
+		*!* Local laObjects[1], lcFile, lnI, loTools
 		
-		*** JRN 2023-01-30 : Form to add PEMs in same folder as this class
-		loTools	= Execscript (_Screen.cThorDispatcher, 'Class= tools from pemeditor')
-		If Isnull(m.loTools)
-			Return
-		Endif
-		lcFile = Forcepath('AskAddPEMNewStayOpen.SCX', Justpath(m.loTools.ClassLibrary))
-		If File(m.lcFile)
-			Do Form (m.lcFile) With, .T., , .T.
-		Endif
+		*!* If m.llOnlyIfFormOrClass And 0 = Aselobj(laObjects) And 0 = Aselobj(laObjects, 1)
+		*!* 	Return
+		*!* Endif
+		
+		*!* For lnI = 1 To _Screen.FormCount
+		*!* 	loForm = _Screen.Forms[m.lnI]
+		*!* 	If Pemstatus(m.loForm, 'lAskAddPEM', 5) And m.loForm.lAskAddPEM
+		*!* 		m.loForm.Show()
+		*!* 		loForm = .Null.
+		*!* 		Return
+		*!* 	Endif
+		*!* Endfor
+		*!* loForm	= .Null.
+		
+		*!* *** JRN 2023-01-30 : Form to add PEMs in same folder as this class
+		*!* loTools	= Execscript (_Screen.cThorDispatcher, 'Class= tools from pemeditor')
+		*!* If Isnull(m.loTools)
+		*!* 	Return
+		*!* Endif
+		*!* lcFile = Forcepath('AskAddPEMNewStayOpen.SCX', Justpath(m.loTools.ClassLibrary))
+		*!* If File(m.lcFile)
+		*!* 	Do Form (m.lcFile) With, .T., , .T.
+		*!* Endif
 		
 	ENDPROC
 
