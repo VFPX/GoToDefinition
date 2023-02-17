@@ -47,6 +47,8 @@ DEFINE CLASS addpem AS form
 		*p: lstayopen
 		*p: nresult
 		*p: oprefs
+		*p: osettings
+		*p: otools
 		*p: otopofform
 		*p: otopoffrom
 		*p: outils
@@ -79,6 +81,8 @@ DEFINE CLASS addpem AS form
 	Name = "AddPEM"
 	nresult = 0
 	oprefs = .F.
+	osettings = .NULL.
+	otools = .NULL.
 	otopofform = .F.
 	otopoffrom = .NULL.
 	outils = .NULL.
@@ -100,6 +104,8 @@ DEFINE CLASS addpem AS form
 		<memberdata name="lstayopen" display="lStayOpen"/>
 		<memberdata name="otopoffrom" display="oTopOfFrom"/>
 		<memberdata name="outils" display="oUtils"/>
+		<memberdata name="otools" display="oTools"/>
+		<memberdata name="osettings" display="oSettings"/>
 		</VFPData>		&& XML Metadata for customizable properties
 
 	ADD OBJECT 'Baselabel1' AS label WITH ;
@@ -317,6 +323,13 @@ DEFINE CLASS addpem AS form
 		
 	ENDPROC
 
+	PROCEDURE Destroy
+		This.oSettings.Save(Thisform)
+		This.oSettings = Null
+		This.oTools	   = Null
+		
+	ENDPROC
+
 	PROCEDURE getthoroption
 		Lparameters lcThorKey, lcThorTool, lxDefaultValue
 		Return Nvl(Execscript (_Screen.cThorDispatcher, 'Get Option=', lcThorKey, lcThorTool), lxDefaultValue)
@@ -341,6 +354,12 @@ DEFINE CLASS addpem AS form
 		Endcase
 		
 		DoDefault()
+		
+		With This
+			.oTools	   = Execscript(_Screen.cThorDispatcher, 'Class= tools from pemeditor')
+			.oSettings = Execscript(_Screen.cThorDispatcher, 'Class= ThorFormSettings', 'Add PEM')
+			.oSettings.Restore(Thisform, 'Height, Width, Top, Left')
+		Endwith
 		
 		With This
 		

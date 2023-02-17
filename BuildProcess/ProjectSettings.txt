@@ -1,6 +1,6 @@
 AppName   = GoToDefinition
 AppID     = GoToDefinition
-Version   = 2.01
+Version   = 2.011
 Component = No
 
 ChangeLog      = Change Log.md

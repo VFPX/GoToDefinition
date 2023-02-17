@@ -1,8 +1,11 @@
 
-### 2023-02-15, Version 2.0 ###
+### 2023-02-17, Version 2.011 ###
 
-* Bug fix for this problem:  Type This.Something(), then press F12, nothing happens)
+* Position and size of form to add new PEMs is persistent.
 
+### 2023-02-15, Version 2.01 ###
+
+* Bug fix for this problem:  Type This.Something(), then press F12, nothing happens.  (Form to add new PEM was not included in download)
 
 ### 2023-02-04, Version 2.0 ###
 
