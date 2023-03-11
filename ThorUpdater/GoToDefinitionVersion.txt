@@ -1,8 +1,8 @@
 lparameters toUpdateObject
 
 with toUpdateObject
-	.VersionNumber    = '2.012 - 20230217'
-	.AvailableVersion = 'GoToDefinition-2.012-08448-20230217'
+	.VersionNumber    = '2.013 - 20230311'
+	.AvailableVersion = 'GoToDefinition-2.013-08470-20230311'
 	.Component        = 'No'
 	.Notes            = GetNotes()
 endwith
@@ -13,6 +13,10 @@ return toUpdateObject
 procedure GetNotes
 local lcNotes
 text to lcNotes noshow
+
+### 2023-03-11, Version 2.013 ###
+
+* Fix: When using form to add new PEMs and entering the description, all characters typed were doubled.
 
 ### 2023-02-17, Version 2.012 ###
 
