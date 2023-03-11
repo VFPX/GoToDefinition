@@ -1,4 +1,8 @@
 
+### 2023-03-11, Version 2.013 ###
+
+* Fix: When using form to add new PEMs and entering the description, all characters typed were doubled.
+
 ### 2023-02-17, Version 2.012 ###
 
 * Position and size of form to add new PEMs is persistent.

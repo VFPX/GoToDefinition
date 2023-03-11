@@ -515,7 +515,8 @@ DEFINE CLASS addpem AS form
 		if tnKeyCode = 13
 			nodefault
 		else
-			dodefault(tnKeyCode, tnShiftAltCtrl)
+			*!* ******** JRN Removed 2023-03-11 ********
+			*!* dodefault(tnKeyCode, tnShiftAltCtrl)
 		endif
 		
 	ENDPROC

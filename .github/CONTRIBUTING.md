@@ -19,7 +19,7 @@ Here are the steps to updating to a new version:
 ---
 3. Edit the Version setting in _BuildProcess\ProjectSettings.txt_.
 4. Update the version and date in _README.md_.
-5. Describe the changes in the top of _docs\Change Log.md_.
+5. Describe the changes in the top of _Change Log.md_.
 6. Run the VFPX Deployment tool to create the installation files by
     -   Invoking menu item  **Thor Tools -> Applications -> VFPX Project Deployment**  
     -   Or executing ```EXECSCRIPT(_screen.cThorDispatcher, 'Thor_Tool_DeployVFPXProject')``` 
@@ -30,4 +30,4 @@ Here are the steps to updating to a new version:
 10. Create a pull request
 
 ---
-Last changed: _2023/01/29_ ![Picture](../documents/Images/vfpxpoweredby_alternative.gif)
+Last changed: _2023/03/11_ ![Picture](../documents/Images/vfpxpoweredby_alternative.gif)
