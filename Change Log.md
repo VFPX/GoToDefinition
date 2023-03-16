@@ -1,4 +1,8 @@
 
+### 2023-03-16, Version 2.014 ###
+
+* Fix to issue #3, where GTD was no longer sensitive to context for DO FORM
+
 ### 2023-03-11, Version 2.013 ###
 
 * Fix: When using form to add new PEMs and entering the description, all characters typed were doubled.

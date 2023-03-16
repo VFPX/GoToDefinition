@@ -53,48 +53,50 @@ DEFINE CLASS basecustom AS custom
 	*</DefinedPropArrayMethod>
 
 	HIDDEN Height,HelpContextID
-	lreleaseondestroy = .F.
-	Name = "basecustom"
-	opemeditor = .NULL.
-	opemeditorutils = .NULL.
-	oprefs = .NULL.
-	_memberdata = <VFPData>
-		<memberdata name="release" display="Release"/>
-		<memberdata name="addmrufile" display="AddMRUFile"/>
-		<memberdata name="diskfilename" display="DiskFileName"/>
-		<memberdata name="getcontrolcount" display="GetControlCount"/>
-		<memberdata name="getpemstatus" display="GetPEMStatus"/>
-		<memberdata name="getrelativepath" display="GetRelativePath"/>
-		<memberdata name="isnamechar" display="IsNameChar"/>
-		<memberdata name="openurl" display="OpenURL"/>
-		<memberdata name="showerrormsg" display="ShowErrorMsg"/>
-		<memberdata name="showhelp" display="ShowHelp"/>
-		<memberdata name="striptabs" display="StripTabs"/>
-		<memberdata name="getmrulist" display="GetMRUList"/>
-		<memberdata name="editsourcex" display="EditSourceX"/>
-		<memberdata name="getmruid" display="GetMRUID"/>
-		<memberdata name="checkoutscc" display="CheckOutSCC"/>
-		<memberdata name="atspecial" type="method" display="AtSpecial"/>
-		<memberdata name="getpluginpath" display="GetPlugInPath"/>
-		<memberdata name="browsefile" display="BrowseFile"/>
-		<memberdata name="getthoroption" type="method" display="GetThorOption"/>
-		<memberdata name="editlocalmethodcode" display="EditLocalMethodCode"/>
-		<memberdata name="findtopmostparent" display="FindTopMostParent"/>
-		<memberdata name="focusoncontrol" display="FocusOnControl"/>
-		<memberdata name="getcurrentincludefile" display="GetCurrentIncludeFile"/>
-		<memberdata name="getincludefiles" display="GetIncludeFiles"/>
-		<memberdata name="getobjectpath" display="GetObjectPath"/>
-		<memberdata name="getregexp" display="GetRegExp"/>
-		<memberdata name="viewtempfile" display="ViewTempFile"/>
-		<memberdata name="opemeditorutils" display="oPEMEditorUtils"/>
-		<memberdata name="opemeditorutils_access" display="oPEMEditorUtils_Access"/>
-		<memberdata name="oprefs" display="oPrefs"/>
-		<memberdata name="oprefs_access" display="oPrefs_Access"/>
-		<memberdata name="opemeditor" display="oPEMEditor"/>
-		<memberdata name="opemeditor_access" display="oPEMEditor_Access"/>
-		<memberdata name="movewindow" display="MoveWindow"/>
-		<memberdata name="findwith" display="FindWith"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		lreleaseondestroy = .F.
+		Name = "basecustom"
+		opemeditor = .NULL.
+		opemeditorutils = .NULL.
+		oprefs = .NULL.
+		_memberdata = <VFPData>
+			<memberdata name="release" display="Release"/>
+			<memberdata name="addmrufile" display="AddMRUFile"/>
+			<memberdata name="diskfilename" display="DiskFileName"/>
+			<memberdata name="getcontrolcount" display="GetControlCount"/>
+			<memberdata name="getpemstatus" display="GetPEMStatus"/>
+			<memberdata name="getrelativepath" display="GetRelativePath"/>
+			<memberdata name="isnamechar" display="IsNameChar"/>
+			<memberdata name="openurl" display="OpenURL"/>
+			<memberdata name="showerrormsg" display="ShowErrorMsg"/>
+			<memberdata name="showhelp" display="ShowHelp"/>
+			<memberdata name="striptabs" display="StripTabs"/>
+			<memberdata name="getmrulist" display="GetMRUList"/>
+			<memberdata name="editsourcex" display="EditSourceX"/>
+			<memberdata name="getmruid" display="GetMRUID"/>
+			<memberdata name="checkoutscc" display="CheckOutSCC"/>
+			<memberdata name="atspecial" type="method" display="AtSpecial"/>
+			<memberdata name="getpluginpath" display="GetPlugInPath"/>
+			<memberdata name="browsefile" display="BrowseFile"/>
+			<memberdata name="getthoroption" type="method" display="GetThorOption"/>
+			<memberdata name="editlocalmethodcode" display="EditLocalMethodCode"/>
+			<memberdata name="findtopmostparent" display="FindTopMostParent"/>
+			<memberdata name="focusoncontrol" display="FocusOnControl"/>
+			<memberdata name="getcurrentincludefile" display="GetCurrentIncludeFile"/>
+			<memberdata name="getincludefiles" display="GetIncludeFiles"/>
+			<memberdata name="getobjectpath" display="GetObjectPath"/>
+			<memberdata name="getregexp" display="GetRegExp"/>
+			<memberdata name="viewtempfile" display="ViewTempFile"/>
+			<memberdata name="opemeditorutils" display="oPEMEditorUtils"/>
+			<memberdata name="opemeditorutils_access" display="oPEMEditorUtils_Access"/>
+			<memberdata name="oprefs" display="oPrefs"/>
+			<memberdata name="oprefs_access" display="oPrefs_Access"/>
+			<memberdata name="opemeditor" display="oPEMEditor"/>
+			<memberdata name="opemeditor_access" display="oPEMEditor_Access"/>
+			<memberdata name="movewindow" display="MoveWindow"/>
+			<memberdata name="findwith" display="FindWith"/>
+		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE addmrufile		&& Adds a file (or class within a file) to its appropriate VFP MRU list.  The last parameter is optional (can be inferred from the filename, after all)
 		Lparameters lcFileName, lcClassName, lcMRU_ID

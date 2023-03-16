@@ -1,8 +1,8 @@
 lparameters toUpdateObject
 
 with toUpdateObject
-	.VersionNumber    = '2.013 - 20230311'
-	.AvailableVersion = 'GoToDefinition-2.013-08470-20230311'
+	.VersionNumber    = '2.014 - 20230316'
+	.AvailableVersion = 'GoToDefinition-2.014-08475-20230316'
 	.Component        = 'No'
 	.Notes            = GetNotes()
 endwith
@@ -13,6 +13,10 @@ return toUpdateObject
 procedure GetNotes
 local lcNotes
 text to lcNotes noshow
+
+### 2023-03-16, Version 2.014 ###
+
+* Fix to issue #3, where GTD was no longer sensitive to context for DO FORM
 
 ### 2023-03-11, Version 2.013 ###
 
