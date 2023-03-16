@@ -55,58 +55,60 @@ DEFINE CLASS addpem AS form
 		*p: _memberdata		&& XML Metadata for customizable properties
 	*</DefinedPropArrayMethod>
 
-	BindControls = .F.
-	Caption = "Add New PEM?"
-	cdescription = 
-	cfoxuserid = AddNew2		&& The FOXUSER ID to save/restore settings to
-	cfoxusername = AddNew2		&& The FOXUSER NAME to save/restore settings to
-	cmethodtext = 
-	cnewname = 
-	cpemtype = 
-	cvalue = 
-	DoCreate = .T.
-	FontSize = 9
-	Height = 262
-	laccess = .F.
-	laskaddpem = .T.
-	lassign = .F.
-	Left = 0
-	lrefreshgrid = .F.
-	lreturnvalue = .F.
-	lstayopen = .F.
-	MaxHeight = 350
-	MaxWidth = 350
-	MinHeight = 215
-	MinWidth = 246
-	Name = "AddPEM"
-	nresult = 0
-	oprefs = .F.
-	osettings = .NULL.
-	otools = .NULL.
-	otopofform = .F.
-	otopoffrom = .NULL.
-	outils = .NULL.
-	Top = 0
-	Width = 302
-	WindowType = 1
-	_memberdata = <VFPData>
-		<memberdata name="addtockl" display="AddtoCKL"/>
-		<memberdata name="cleanup" display="Cleanup"/>
-		<memberdata name="cdescription" display="cDescription"/>
-		<memberdata name="cmethodtext" display="cMethodText"/>
-		<memberdata name="cpemtype" display="cPEMType"/>
-		<memberdata name="cvalue" display="cValue"/>
-		<memberdata name="laccess" display="lAccess"/>
-		<memberdata name="laskaddpem" display="lAskAddPEM"/>
-		<memberdata name="lassign" display="lAssign"/>
-		<memberdata name="lrefreshgrid" display="lRefreshGrid"/>
-		<memberdata name="lreturnvalue" display="lReturnValue"/>
-		<memberdata name="lstayopen" display="lStayOpen"/>
-		<memberdata name="otopoffrom" display="oTopOfFrom"/>
-		<memberdata name="outils" display="oUtils"/>
-		<memberdata name="otools" display="oTools"/>
-		<memberdata name="osettings" display="oSettings"/>
-		</VFPData>		&& XML Metadata for customizable properties
+	*<PropValue>
+		BindControls = .F.
+		Caption = "Add New PEM?"
+		cdescription = 
+		cfoxuserid = AddNew2
+		cfoxusername = AddNew2
+		cmethodtext = 
+		cnewname = 
+		cpemtype = 
+		cvalue = 
+		DoCreate = .T.
+		FontSize = 9
+		Height = 262
+		laccess = .F.
+		laskaddpem = .T.
+		lassign = .F.
+		Left = 0
+		lrefreshgrid = .F.
+		lreturnvalue = .F.
+		lstayopen = .F.
+		MaxHeight = 350
+		MaxWidth = 350
+		MinHeight = 215
+		MinWidth = 246
+		Name = "AddPEM"
+		nresult = 0
+		oprefs = .F.
+		osettings = .NULL.
+		otools = .NULL.
+		otopofform = .F.
+		otopoffrom = .NULL.
+		outils = .NULL.
+		Top = 0
+		Width = 302
+		WindowType = 1
+		_memberdata = <VFPData>
+			<memberdata name="addtockl" display="AddtoCKL"/>
+			<memberdata name="cleanup" display="Cleanup"/>
+			<memberdata name="cdescription" display="cDescription"/>
+			<memberdata name="cmethodtext" display="cMethodText"/>
+			<memberdata name="cpemtype" display="cPEMType"/>
+			<memberdata name="cvalue" display="cValue"/>
+			<memberdata name="laccess" display="lAccess"/>
+			<memberdata name="laskaddpem" display="lAskAddPEM"/>
+			<memberdata name="lassign" display="lAssign"/>
+			<memberdata name="lrefreshgrid" display="lRefreshGrid"/>
+			<memberdata name="lreturnvalue" display="lReturnValue"/>
+			<memberdata name="lstayopen" display="lStayOpen"/>
+			<memberdata name="otopoffrom" display="oTopOfFrom"/>
+			<memberdata name="outils" display="oUtils"/>
+			<memberdata name="otools" display="oTools"/>
+			<memberdata name="osettings" display="oSettings"/>
+		</VFPData>
+	*</PropValue>
 
 	ADD OBJECT 'Baselabel1' AS label WITH ;
 		Alignment = 1, ;
@@ -563,11 +565,13 @@ ENDDEFINE
 DEFINE CLASS dataenvironment AS dataenvironment 
  	*< CLASSDATA: Baseclass="dataenvironment" Timestamp="" Scale="" Uniqueid="" ClassIcon="1" />
 
-	DataSource = .NULL.
-	Height = 0
-	Left = 0
-	Name = "Dataenvironment"
-	Top = 0
-	Width = 0
+	*<PropValue>
+		DataSource = .NULL.
+		Height = 0
+		Left = 0
+		Name = "Dataenvironment"
+		Top = 0
+		Width = 0
+	*</PropValue>
 
 ENDDEFINE

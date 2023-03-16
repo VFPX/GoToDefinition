@@ -13,19 +13,22 @@
 ## New version
 Here are the steps to updating to a new version:
 
-1. Create a fork at github
-   - See this [guide](https://www.dataschool.io/how-to-contribute-on-github/) for setting up and using a fork
-2. Make whatever changes are necessary.
+1. Fork the project: see this [guide](https://www.dataschool.io/how-to-contribute-on-github/) for setting up and using a fork.
+
+1. Make whatever changes are necessary. The source code for GoToDefinition is in the InstalledFiles folder.
+
+1. If you haven't already done so, install VFPX Deployment: invoke menu item  **Thor -> Check For Updates**, turn on the checkbox for VFPX Deployment, and click Install.
+
 ---
-3. Edit the Version setting in _BuildProcess\ProjectSettings.txt_.
-4. Update the version and date in _README.md_.
-5. Describe the changes in the top of _Change Log.md_.
-6. Run the VFPX Deployment tool to create the installation files by
+4. Edit the Version setting in _BuildProcess\ProjectSettings.txt_.
+1. Update the version and date in _README.md_.
+1. Describe the changes in the top of _Change Log.md_.
+1. Run the VFPX Deployment tool to create the installation files by
     -   Invoking menu item  **Thor Tools -> Applications -> VFPX Project Deployment**  
-    -   Or executing ```EXECSCRIPT(_screen.cThorDispatcher, 'Thor_Tool_DeployVFPXProject')``` 
     -   Or executing Thor tool **"VFPX Project Deployment"**
+    -   Or executing ```EXECSCRIPT(_screen.cThorDispatcher, 'Thor_Tool_DeployVFPXProject')``` 
 ---
-7. Commit
+8. Commit
 9. Push to your fork
 10. Create a pull request
 

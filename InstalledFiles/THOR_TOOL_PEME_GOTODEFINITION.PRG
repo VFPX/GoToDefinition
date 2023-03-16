@@ -45,6 +45,9 @@ Customizable to handle names other than those mentioned above; for instance, to 
 		.Link 	  = 'https://github.com/VFPX/GoToDefinition'
 		.Sort	  = -1 && the sort order for all items from the same .Source
 		.PlugIns  = 'GetDefaultValue, GetNewMethodHeader, GoToDefinition'
+
+		.ForumName = 'GoToDefinition'
+		.ForumLink = 'https://github.com/VFPX/GoToDefinition/issues'
 	Endwith
 
 	Return m.lxParam1

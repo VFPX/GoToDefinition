@@ -85,99 +85,101 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 	*</DefinedPropArrayMethod>
 
 	HIDDEN Height,HelpContextID
-	cfullmethodname = 
-	cmethodname = 
-	csourcefilename = 
-	cstackline = 
-	cwontop = 
-	Height = 17
-	lclass = .F.
-	ldodefault = .F.
-	lformorclass = .F.
-	lfound = .F.
-	lfullpath = .F.
-	lsearched = .F.
-	Name = "gotodefinition"
-	nlefthighlightpos = 0
-	nrighthighlightpos = 0
-	nseconds = 0
-	nwindowtype = 0
-	oeditorwin = .NULL.
-	oprefs = .NULL.
-	otopofform = .NULL.
-	Width = 124
-	_memberdata = <VFPData>
-		<memberdata name="oeditorwin" display="oEditorWin"/>
-		<memberdata name="gotodef" display="GoToDef"/>
-		<memberdata name="gotodefcreateobject" display="GoToDefCreateObject"/>
-		<memberdata name="gotodefcurlybraces" display="GoToDefCurlyBraces"/>
-		<memberdata name="gotodeffindclass" display="GoToDefFindClass"/>
-		<memberdata name="gotodeffindclassinpath" display="GoToDefFindClassInPath"/>
-		<memberdata name="gotodeffindconstant" display="GoToDefFindConstant"/>
-		<memberdata name="gotodeffindfile" display="GoToDefFindFile"/>
-		<memberdata name="gotodeffindprogram" display="GoToDefFindProgram"/>
-		<memberdata name="gotodeflocal" display="GoToDefLocal"/>
-		<memberdata name="gotodeflocateline" display="GoToDefLocateLine"/>
-		<memberdata name="gotodefnewobject" display="GoToDefNewObject"/>
-		<memberdata name="gotodefprocessinclude" display="GoToDefProcessInclude"/>
-		<memberdata name="gotodefprocessprg" display="GoToDefProcessPRG"/>
-		<memberdata name="gotodefprocessprgforclass" display="GoToDefProcessPRGForClass"/>
-		<memberdata name="gotodefprocessvcxforclass" display="GoToDefProcessVCXForClass"/>
-		<memberdata name="gotoisxclassdefinition" display="GoToISXClassDefinition"/>
-		<memberdata name="getcurrenthighlightedtext" display="GetCurrentHighlightedText"/>
-		<memberdata name="movewindow" display="MoveWindow"/>
-		<memberdata name="quickaddpem" display="QuickAddPEM"/>
-		<memberdata name="removequotes" display="RemoveQuotes"/>
-		<memberdata name="nlefthighlightpos" display="nLeftHighlightPos"/>
-		<memberdata name="nrighthighlightpos" display="nRightHighlightPos"/>
-		<memberdata name="oprefs" display="oPrefs"/>
-		<memberdata name="aproclines[1]" display="aProcLines[1]"/>
-		<memberdata name="lfound" display="lFound"/>
-		<memberdata name="nwindowtype" display="nWindowType"/>
-		<memberdata name="lsearched" display="lSearched"/>
-		<memberdata name="lformorclass" display="lFormOrClass"/>
-		<memberdata name="cmethodname" display="cMethodName"/>
-		<memberdata name="cfullmethodname" display="cFullMethodName"/>
-		<memberdata name="cwontop" display="cWonTop"/>
-		<memberdata name="otopofform" display="oTopOfForm"/>
-		<memberdata name="lfullpath" display="lFullPath"/>
-		<memberdata name="ldodefault" display="lDoDefault"/>
-		<memberdata name="getwindowname" display="GetWindowName"/>
-		<memberdata name="setupdodefault" display="SetupDODEFAULT"/>
-		<memberdata name="handlethisform" display="HandleTHISFORM"/>
-		<memberdata name="handlekeywords" display="HandleKeywords"/>
-		<memberdata name="handlefilenames" display="HandleFileNames"/>
-		<memberdata name="csourcefilename" display="cSourceFileName"/>
-		<memberdata name="lclass" display="lClass"/>
-		<memberdata name="peme_findtopmostparent" display="PEME_FindTopmostParent"/>
-		<memberdata name="getinheritedcode" display="GetInheritedCode"/>
-		<memberdata name="getobjectparentclasses" display="GetObjectParentClasses"/>
-		<memberdata name="getclassfilename" display="GetClassFileName"/>
-		<memberdata name="setupforparentobjectclasses" display="SetupForParentObjectClasses"/>
-		<memberdata name="getcodeorvalue" display="GetCodeOrValue"/>
-		<memberdata name="isreadonly" display="IsReadOnly"/>
-		<memberdata name="gotodefineclassparent" display="GoToDefineClassParent"/>
-		<memberdata name="run" display="Run"/>
-		<memberdata name="isprgfile" display="IsPRGFile"/>
-		<memberdata name="ismethodcode" display="IsMethodCode"/>
-		<memberdata name="ismenucode" display="IsMenuCode"/>
-		<memberdata name="handlethisinprg" display="HandleTHISinPRG"/>
-		<memberdata name="showmatchname" display="ShowMatchName"/>
-		<memberdata name="gotodeffindprocedure" display="GoToDefFindProcedure"/>
-		<memberdata name="browsetable" display="BrowseTable"/>
-		<memberdata name="handleexistingobject" display="HandleExistingObject"/>
-		<memberdata name="addmethodwithparameters" display="AddMethodWithParameters"/>
-		<memberdata name="getaliasobject" display="GetAliasObject"/>
-		<memberdata name="gotoclassbyname" display="GoToClassByName"/>
-		<memberdata name="readme" display="ReadMe"/>
-		<memberdata name="arimings[1,5]" display="aRimings[1,5]"/>
-		<memberdata name="timing" display="Timing"/>
-		<memberdata name="nseconds" display="nSeconds"/>
-		<memberdata name="cstackline" display="cStackLine"/>
-		<memberdata name="handleopenedfilename" display="HandleOpenedFileName"/>
-		<memberdata name="gotodeffindstem" display="GoToDefFindStem"/>
-		<memberdata name="getentireline" display="GetEntireLine"/>
+	*<PropValue>
+		cfullmethodname = 
+		cmethodname = 
+		csourcefilename = 
+		cstackline = 
+		cwontop = 
+		Height = 17
+		lclass = .F.
+		ldodefault = .F.
+		lformorclass = .F.
+		lfound = .F.
+		lfullpath = .F.
+		lsearched = .F.
+		Name = "gotodefinition"
+		nlefthighlightpos = 0
+		nrighthighlightpos = 0
+		nseconds = 0
+		nwindowtype = 0
+		oeditorwin = .NULL.
+		oprefs = .NULL.
+		otopofform = .NULL.
+		Width = 124
+		_memberdata = <VFPData>
+			<memberdata name="oeditorwin" display="oEditorWin"/>
+			<memberdata name="gotodef" display="GoToDef"/>
+			<memberdata name="gotodefcreateobject" display="GoToDefCreateObject"/>
+			<memberdata name="gotodefcurlybraces" display="GoToDefCurlyBraces"/>
+			<memberdata name="gotodeffindclass" display="GoToDefFindClass"/>
+			<memberdata name="gotodeffindclassinpath" display="GoToDefFindClassInPath"/>
+			<memberdata name="gotodeffindconstant" display="GoToDefFindConstant"/>
+			<memberdata name="gotodeffindfile" display="GoToDefFindFile"/>
+			<memberdata name="gotodeffindprogram" display="GoToDefFindProgram"/>
+			<memberdata name="gotodeflocal" display="GoToDefLocal"/>
+			<memberdata name="gotodeflocateline" display="GoToDefLocateLine"/>
+			<memberdata name="gotodefnewobject" display="GoToDefNewObject"/>
+			<memberdata name="gotodefprocessinclude" display="GoToDefProcessInclude"/>
+			<memberdata name="gotodefprocessprg" display="GoToDefProcessPRG"/>
+			<memberdata name="gotodefprocessprgforclass" display="GoToDefProcessPRGForClass"/>
+			<memberdata name="gotodefprocessvcxforclass" display="GoToDefProcessVCXForClass"/>
+			<memberdata name="gotoisxclassdefinition" display="GoToISXClassDefinition"/>
+			<memberdata name="getcurrenthighlightedtext" display="GetCurrentHighlightedText"/>
+			<memberdata name="movewindow" display="MoveWindow"/>
+			<memberdata name="quickaddpem" display="QuickAddPEM"/>
+			<memberdata name="removequotes" display="RemoveQuotes"/>
+			<memberdata name="nlefthighlightpos" display="nLeftHighlightPos"/>
+			<memberdata name="nrighthighlightpos" display="nRightHighlightPos"/>
+			<memberdata name="oprefs" display="oPrefs"/>
+			<memberdata name="aproclines[1]" display="aProcLines[1]"/>
+			<memberdata name="lfound" display="lFound"/>
+			<memberdata name="nwindowtype" display="nWindowType"/>
+			<memberdata name="lsearched" display="lSearched"/>
+			<memberdata name="lformorclass" display="lFormOrClass"/>
+			<memberdata name="cmethodname" display="cMethodName"/>
+			<memberdata name="cfullmethodname" display="cFullMethodName"/>
+			<memberdata name="cwontop" display="cWonTop"/>
+			<memberdata name="otopofform" display="oTopOfForm"/>
+			<memberdata name="lfullpath" display="lFullPath"/>
+			<memberdata name="ldodefault" display="lDoDefault"/>
+			<memberdata name="getwindowname" display="GetWindowName"/>
+			<memberdata name="setupdodefault" display="SetupDODEFAULT"/>
+			<memberdata name="handlethisform" display="HandleTHISFORM"/>
+			<memberdata name="handlekeywords" display="HandleKeywords"/>
+			<memberdata name="handlefilenames" display="HandleFileNames"/>
+			<memberdata name="csourcefilename" display="cSourceFileName"/>
+			<memberdata name="lclass" display="lClass"/>
+			<memberdata name="peme_findtopmostparent" display="PEME_FindTopmostParent"/>
+			<memberdata name="getinheritedcode" display="GetInheritedCode"/>
+			<memberdata name="getobjectparentclasses" display="GetObjectParentClasses"/>
+			<memberdata name="getclassfilename" display="GetClassFileName"/>
+			<memberdata name="setupforparentobjectclasses" display="SetupForParentObjectClasses"/>
+			<memberdata name="getcodeorvalue" display="GetCodeOrValue"/>
+			<memberdata name="isreadonly" display="IsReadOnly"/>
+			<memberdata name="gotodefineclassparent" display="GoToDefineClassParent"/>
+			<memberdata name="run" display="Run"/>
+			<memberdata name="isprgfile" display="IsPRGFile"/>
+			<memberdata name="ismethodcode" display="IsMethodCode"/>
+			<memberdata name="ismenucode" display="IsMenuCode"/>
+			<memberdata name="handlethisinprg" display="HandleTHISinPRG"/>
+			<memberdata name="showmatchname" display="ShowMatchName"/>
+			<memberdata name="gotodeffindprocedure" display="GoToDefFindProcedure"/>
+			<memberdata name="browsetable" display="BrowseTable"/>
+			<memberdata name="handleexistingobject" display="HandleExistingObject"/>
+			<memberdata name="addmethodwithparameters" display="AddMethodWithParameters"/>
+			<memberdata name="getaliasobject" display="GetAliasObject"/>
+			<memberdata name="gotoclassbyname" display="GoToClassByName"/>
+			<memberdata name="readme" display="ReadMe"/>
+			<memberdata name="arimings[1,5]" display="aRimings[1,5]"/>
+			<memberdata name="timing" display="Timing"/>
+			<memberdata name="nseconds" display="nSeconds"/>
+			<memberdata name="cstackline" display="cStackLine"/>
+			<memberdata name="handleopenedfilename" display="HandleOpenedFileName"/>
+			<memberdata name="gotodeffindstem" display="GoToDefFindStem"/>
+			<memberdata name="getentireline" display="GetEntireLine"/>
 		</VFPData>
+	*</PropValue>
 	
 	PROCEDURE addmethodwithparameters
 		Local lcMethod, lcMethodName, lcParameters, lcTextAfter, lcTextBefore, lcText, lnEndPos, lnPos
@@ -1929,22 +1931,22 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 				* DO FORM and REPORT FORM
 			Otherwise
-				
-				*!* ******** JRN Removed 2023-02-02 ********
-				*!* lcText = This.GetEntireLine(This.nLeftHighlightPos)
 		
-				*!* Do Case
-				*!* 	Case Getwordcount (m.lcText) # 2
+				lnStartPos = This.oEditorWin.GetLineStart (This.nLeftHighlightPos, 0)
+				lcText	   = This.oEditorWin.GetString (m.lnStartPos, This.nLeftHighlightPos - 1)
 		
-				*!* 	Case Upper (Getwordnum (m.lcText, 1)) == 'DO'		;
-				*!* 			And Upper (Getwordnum (m.lcText, 2)) == 'FORM'
-				*!* 		This.lFound	   = This.GoToDefFindFile (Forceext (This.cMethodName, 'SCX'))
-				*!* 		This.lSearched = This.lFound
-				*!* 	Case Upper (Getwordnum (m.lcText, 1)) == 'REPORT'		;
-				*!* 			And Upper (Getwordnum (m.lcText, 2)) == 'FORM'
-				*!* 		This.lFound	   = This.GoToDefFindFile (Forceext (This.cMethodName, 'FRX'))
-				*!* 		This.lSearched = This.lFound
-				*!* Endcase
+				Do Case
+					Case Getwordcount (m.lcText) # 2
+		
+					Case Upper (Getwordnum (m.lcText, 1)) == 'DO'		;
+							And Upper (Getwordnum (m.lcText, 2)) == 'FORM'
+						This.lFound	   = This.GoToDefFindFile (Forceext (This.cMethodName, 'SCX'))
+						This.lSearched = This.lFound
+					Case Upper (Getwordnum (m.lcText, 1)) == 'REPORT'		;
+							And Upper (Getwordnum (m.lcText, 2)) == 'FORM'
+						This.lFound	   = This.GoToDefFindFile (Forceext (This.cMethodName, 'FRX'))
+						This.lSearched = This.lFound
+				Endcase
 		
 		Endcase
 		
