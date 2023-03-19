@@ -34,7 +34,7 @@ Customizable to handle names other than those mentioned above; for instance, to 
 		* Optional
 		.StatusBarText	 = 'Go to the definition of the name under the cursor; method, PRG, procedure, etc.'
 		.Summary		 = 'Go to the definition of the name under the cursor; method, PRG, procedure, etc.' && if empty, first line of .Description is used
-		.Classes            = 'loTools = Tools of PEME_Tools|https://github.com/VFPX/Thor/blob/master/Docs/Thor_tools_object.md, loEditorWin = EditorWin of PEME_EditorWin|https://github.com/VFPX/Thor/blob/master/Docs/Thor_editorwindow_object.md' && separated by commas.  e.g.,  'thorinfo of thor_utils'
+		.Classes            = 'loEditorWin = EditorWin of Thor_Proc_EditorWin.PRG|https://github.com/VFPX/Thor/blob/master/Docs/Thor_editorwindow_object.md' 
 		.OptionClasses      = 'clsSourceControl, clsChangeClassVFPDialog, clsResizeWindow, clsCreateLocals, clsBeautifyX'   
 		.CanRunAtStartUp = .F.
 
