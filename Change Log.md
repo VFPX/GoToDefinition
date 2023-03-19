@@ -1,4 +1,8 @@
 
+### 2023-03-19, Version 2.015 ###
+
+* Fix to issue #3, where GTD was no longer sensitive to context for DO FORM
+
 ### 2023-03-16, Version 2.014 ###
 
 * Fix to issue #3, where GTD was no longer sensitive to context for DO FORM
