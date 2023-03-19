@@ -26,6 +26,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		*m: gogetparentobjectclasses
 		*m: gotoclassbyname
 		*m: gotodef
+		*m: gotodefcontext
 		*m: gotodefcreateobject
 		*m: gotodefcurlybraces
 		*m: gotodeffindclass
@@ -178,6 +179,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 			<memberdata name="handleopenedfilename" display="HandleOpenedFileName"/>
 			<memberdata name="gotodeffindstem" display="GoToDefFindStem"/>
 			<memberdata name="getentireline" display="GetEntireLine"/>
+			<memberdata name="gotodefcontext" display="GoToDefContext"/>
 		</VFPData>
 	*</PropValue>
 	
@@ -1045,6 +1047,25 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 	ENDPROC
 
+	PROCEDURE gotodefcontext
+		Lparameters lcText, lnWord, lcExt
+		
+		Local lcFile
+		
+		lcFile = Getwordnum(m.lcText, m.lnWord)
+		Do Case
+			Case m.lcFile = [']
+				lcFile = Strextract(m.lcText, ['], ['], 1)
+			Case m.lcFile = ["]
+				lcFile = Strextract(m.lcText, ["], ["], 1)
+			Case m.lcFile = '['
+				lcFile = Strextract(m.lcText, '[', ']', 1)
+		Endcase
+		
+		This.lFound = This.GoToDefFindFile(ForceExt(lcFile, lcExt))
+		
+	ENDPROC
+
 	PROCEDURE gotodefcreateobject
 		Local lcClass, lcText, lnEndPos
 		
@@ -1292,9 +1313,8 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 			lcFileName = Forceext(m.lcFileName, '.SCX')
 		Endif
 		
-		lcFullName = Fullpath (m.lcFileName)
-		If File (m.lcFullName)
-			This.EditSourceX (m.lcFullName)
+		If File (m.lcFileName)
+			This.EditSourceX (m.lcFileName)
 			Return .T.
 		Endif
 		
@@ -1917,6 +1937,26 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 				* LOCAL
 			Case Upper (This.cMethodName) == 'LOCAL'
 				This.lFound	   = This.GoToDefLocal ()
+				This.lSearched = .T.
+		
+				* DO {Prg} or DO FORM {Form}
+			Case Upper (This.cMethodName) == 'DO'
+				lcText = This.GetEntireLine(This.nLeftHighlightPos)
+				lcText = Chrtran(lcText, CR + LF + '&', '   ')
+				If Upper (Getwordnum (m.lcText, 2)) == 'FORM'
+					This.lFound = This.GoToDefContext(m.lcText, 3, 'SCX')
+				Else
+					This.lFound = This.GoToDefContext(m.lcText, 2, 'PRG')
+				Endif
+				This.lSearched = .T.
+		
+				* REPORT FORM {FRX}
+			Case Upper (This.cMethodName) == 'REPORT'
+				lcText = This.GetEntireLine(This.nLeftHighlightPos)
+				lcText = Chrtran(lcText, CR + LF + '&', '   ')
+				If Upper (Getwordnum (m.lcText, 2)) == 'FORM'
+					This.lFound = This.GoToDefContext(m.lcText, 3, 'FRX')
+				Endif
 				This.lSearched = .T.
 		
 				* Define class NAME as class of classlib

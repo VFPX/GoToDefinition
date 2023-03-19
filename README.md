@@ -1,6 +1,6 @@
 # GoToDefinition
 
-Version 2.014 Released 2023-03-16
+Version 2.015 Released 2023-03-19
 
 [What's new in this release](Change%20Log.md)
 
@@ -49,14 +49,14 @@ The effect is that you can simply click before the first character of the name, 
 	* Constants (from #Include and #Define)
 	* Local variables _(Not Yet Implemented, under consideration)_
  
-* VFP Keywords
+* VFP Keywords (You can click on the keyword)
 	* NEWOBJECT
 	* CREATEOBJECT
 	* LOCAL
 	* DEFINE CLASS
-	* DO PRG  _(Not Yet Implemented, under consideration)_
-	* Do FORM  _(Not Yet Implemented, under consideration)_
-	* REPORT FORM  _(Not Yet Implemented, under consideration)_
+	* DO
+	* Do FORM
+	* REPORT FORM
  
 * THISFORM and THIS (interchangeable)
 	* THISFORM
@@ -67,6 +67,7 @@ The effect is that you can simply click before the first character of the name, 
 	* THISFORM.SomeNewMethod(parameters)
 	* THISFORM.SomeControl
 	* THISFORM.SomeControl.SomePropertyOrMethod
+    * THISFORM.SomeControl.SomeNewPropertyOrMethod
  
 * Object.MethodName  
     * Name of an object that is open
@@ -130,4 +131,4 @@ This project began in early 2010 when Matt Slay suggested to Jim Nelson that a t
 ## Helping with this project
 See [How to contribute to GoToDefinition](.github/CONTRIBUTING.md) for details on how to help with this project.
 
-Last changed: _2023-03-16_ ![Picture](./documents/images/vfpxpoweredby_alternative.gif)
+Last changed: _2023-03-19_ ![Picture](./documents/images/vfpxpoweredby_alternative.gif)
