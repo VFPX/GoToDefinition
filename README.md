@@ -22,7 +22,7 @@ The “name” that is searched for is determined as follows:
 2. All characters to the left of the cursor (or of the selected text, if any) that can be part of a name, _including periods_, are included. 
 3. If the leftmost character is a period and is only preceded by whitespace, then the preceding code is examined looking for WITH statements.  This is done repeatedly, handling embedded WITHs. 
 
-The effect is that you can simply click before the first character of the name, after the last character, or any place in between. GTD will look for the appropriate Property or method, even when the reference is inside a With statement.
+As a result, you can simply click on a keyword to search for its definition, anywhere from before the first character of the name to after the last character. GTD will look for the appropriate Property or method, even when the reference is inside a With statement.
 
  The example below demonstrates all of these rules, as the name being searched for is `This.Frame.Pg1.cboStates`.
 
