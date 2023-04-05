@@ -1,3 +1,16 @@
+### 2023-04-09, Version 2.10 ###
+
+FILL THIS IN!!
+
+- Search for Locals!
+- Key words
+    - NewObject
+    - CreateObject
+    - Do Form
+    - Report Form
+    - Do 
+    - Local VarName as Class of Classlib
+    - DEFINE CLASS ClassName1 AS ParentClass [OF ClassLibrary] 
 
 ### 2023-03-19, Version 2.015 ###
 

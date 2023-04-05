@@ -1,6 +1,6 @@
 # GoToDefinition
 
-Version 2.015 Released 2023-03-19
+Version 2.10 Released 2023-04-09
 
 [What's new in this release](Change%20Log.md)
 
@@ -131,4 +131,4 @@ This project began in early 2010 when Matt Slay suggested to Jim Nelson that a t
 ## Helping with this project
 See [How to contribute to GoToDefinition](.github/CONTRIBUTING.md) for details on how to help with this project.
 
-Last changed: _2023-03-19_ ![Picture](./documents/images/vfpxpoweredby_alternative.gif)
+Last changed: _2023-04-09_ ![Picture](./documents/images/vfpxpoweredby_alternative.gif)
