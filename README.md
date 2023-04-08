@@ -8,12 +8,12 @@ Version 2.10 Released 2023-04-09
 
 
 ## Introduction
-Go To Definition (GTD), modeled after "Go to Definition" (F12) in Visual Studio, allows you to point to a name that is referenced in your code, and go to (that is, display and/or edit) its definition. It can also be used to create new methods and properties in a form or class.
+Go To Definition (**GTD**), modeled after "Go to Definition" (F12) in Visual Studio, allows you to point to a name that is referenced in your code, and go to (that is, display and/or edit) its definition. It can also be used to create new methods and properties in a form or class.
 The mechanics are simple:
 * Click on the name (in almost all cases, no need to highlight it.)
-* Run GTD. 
+* Run **GTD**. 
 
-The intent of GTD is that it can search for any name where you can imagine that a definition could be found programmatically; that is, without reading your mind.  And there's no penalty (other than a few wasted seconds) if it's unsuccessful.
+The intent of **GTD** is that it can search for any name where you can imagine that a definition could be found programmatically; that is, without reading your mind.  And there's no penalty (other than a few wasted seconds) if it's unsuccessful.
 
 
 ### What's in a name?
@@ -22,14 +22,13 @@ The “name” that is searched for is determined as follows:
 2. All characters to the left of the cursor (or of the selected text, if any) that can be part of a name, _including periods_, are included. 
 3. If the leftmost character is a period and is only preceded by whitespace, then the preceding code is examined looking for WITH statements.  This is done repeatedly, handling embedded WITHs. 
 
-As a result, you can simply click on a name to search for its definition, anywhere from before the first character of the name to after the last character. GTD will look for the appropriate Property or method, even when the reference is inside a With statement.
+As a result, you can simply click on a name to search for its definition, anywhere from before the first character of the name to after the last character. **GTD** will even look for the appropriate property or method even when the reference is inside a WITH/ENDWITH block.
 
- The example below demonstrates all of these rules, as the name being searched for is `This.Frame.Pg1.cboStates`.
+The example below demonstrates all of these rules, as the name being searched for is `This.Frame.Pg1.cboStates`.
 
 ![](documents/Images/Embedded%20Withs.png)
 
 #### What you can search for
-
 
 * Simple names (that look like valid variable names):
 	* File name with any of these extensions
@@ -47,16 +46,17 @@ As a result, you can simply click on a name to search for its definition, anywhe
 		* LOCAL
 	* Name of an object defined in Alias Dictionary
 	* Constants (from #Include and #Define)
-	* Local variables
+	* Variables (assigned in same procedure)
+	* Cursors (created in same procedure)
  
-* VFP Keywords (You can click on the keyword)
+* <a name="Keywords"></a>VFP Keywords (Click on the keyword -- the first one, if there are two)
+	* DO
+	* DO FORM
+	* REPORT FORM
 	* NEWOBJECT
 	* CREATEOBJECT
 	* LOCAL
 	* DEFINE CLASS
-	* DO
-	* Do FORM
-	* REPORT FORM
  
 * THISFORM and THIS (interchangeable)
 	* THISFORM
@@ -79,10 +79,9 @@ As a result, you can simply click on a name to search for its definition, anywhe
  
 For file names with special characters (extension, drive, backslash, etc.), the entire file name must be highlighted (and you can include the quotes.)
 
-
 #### Where does it look?
 
-GTD looks in many locations, including:
+**GTD** looks in many locations, including:
 *   The current code window
 *   The current folder
 *   The search path
@@ -95,11 +94,21 @@ GTD looks in many locations, including:
 
 #### Name Conflicts
 
-In some cases, a name being searched for may not be unique.  You might, for instance have a table named "Admin", as well as a form, report, class, and class library of the same name.  GTD will stop searching after the first one it finds.
+In some cases, a name being searched for may not be unique.  You might, for instance have a table named "Admin", as well as a form, report, class, and class library of the same name.  **GTD** will stop searching after the first one it finds.
+
+In some instances, however, you can point **GTD** in the right direction by clicking on the first keyword in statements like this:
+   - DO Admin
+   - DO FORM Admin
+   - REPORT FORM Admin
+   - NEWOBJECT (Admin, 'Admin.VCX')
+   - CREATEOBJECT (Admin)
+   - LOCAL loObject as Admin of 'Admin.vcx'
+   - DEFINE CLASS classname as Admin of 'Admin.vcx'
+
 
 #### Search Order
 
-GTD searches in a way similar to how people might search for things --
+**GTD** searches in a way similar to how people might search for things --
 1. Searches that don't take too long.
 2. Searches for things you're most likely to be looking for. 
 
@@ -107,14 +116,14 @@ This is tempered somewhat by a few cases where the searches must be done in a sp
 
 #### Confusion with "ThisForm" and "This"
 
-Unfortunately, for code windows within VCXs and SCXs, there is not much information that can be gleaned about the origin of the window, other than what is available in the titlebar. GTD may misbehave in a couple of different ways due to this problem:
-*   If you have more than one VCX or SCX open, it's not possible to determine which VCX or SCX a code window belongs to (!)  GTD assumes that it belongs to the "active" one that shows up in PEMEditor or the Property Window.
-*   The only information available to understand what "This" refers to is in the method's titlebar. If the name in the titlebar is not unique, GTD may use the incorrect object.
+Unfortunately, for code windows within VCXs and SCXs, there is not much information that can be gleaned about the origin of the window, other than what is available in the titlebar. **GTD** may misbehave in a couple of different ways due to this problem:
+*   If you have more than one VCX or SCX open, it's not possible to determine which VCX or SCX a code window belongs to (!)  **GTD** assumes that it belongs to the "active" one that shows up in PEMEditor or the Property Window.
+*   The only information available to understand what "This" refers to is in the method's titlebar. If the name in the titlebar is not unique, **GTD** may use the incorrect object.
 
 Incidentally, these same problems occur in [IntelliSenseX](https://github.com/VFPX/IntelliSenseX).
 
 #### Bookmarks (leaving breadcumbs)
- GTD creates bookmarks each time it is used, one placed where GTD was invoked and one at its destination (if in a code window).  Two new Thor tools work with these bookmarks:
+ **GTD** creates bookmarks each time it is used, one placed where **GTD** was invoked and one at its destination (if in a code window).  Two new Thor tools work with these bookmarks:
  * **Cycle Bookmarks** takes you through all your current bookmarks.
  * **Add/Remove BookMark** will add a bookmark at the current location if there isn't one there or remove the current bookmark if there is.
  
@@ -126,6 +135,13 @@ This project began in early 2010 when Matt Slay suggested to Jim Nelson that a t
 > Author's note: I call this tool **"What's This?"** / Jim
 
 [What's new in this release](Change%20Log.md)
+
+----
+## Related News Items
+
+**[2014-01-04 : Go To Definition](https://github.com/VFPX/ThorNews/blob/main/NewsItems/Tweet_27.md)**
+
+**[2023-02-05 : Go To Definition Enhancements ](https://github.com/VFPX/ThorNews/blob/main/NewsItems/Item_48.md)** 
 
 ----
 ## Helping with this project
