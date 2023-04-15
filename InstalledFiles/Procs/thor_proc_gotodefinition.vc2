@@ -89,6 +89,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		*p: nwindowtype
 		*p: oeditorwin
 		*p: otopofform
+		*a: aproclines[1,0]
 		*a: arimings[1,5]
 	*</DefinedPropArrayMethod>
 
@@ -307,7 +308,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 				lcModified		= Chrtran(m.lcStatement, '[]()', '    ')
 				lnStartPosition	= This.FindAssignmentMatch(m.lcModified, m.lcWord2, m.lcVariableName)
 		
-			Case 'local ' = m.lcWord1
+			Case 'local ' = m.lcWord1 or 'private ' = m.lcWord1 or 'public ' = m.lcWord1
 				lcModified		= Chrtran(m.lcStatement, '[]()', '    ')
 				lnStartPosition	= This.FindAssignmentMatch(m.lcModified, m.lcWord1, m.lcVariableName)
 		
@@ -346,6 +347,10 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 			Case 'select ' = m.lcWord1 And ' into cursor ' $ m.lcStatement
 				lnStartPosition = This.FindAssignmentMatch(m.lcStatement, ' into cursor ', m.lcVariableName, 1)
+		
+			Case 'create ' = m.lcWord1 And ' cursor ' $ m.lcStatement
+				lcModified		= Chrtran(m.lcStatement, '(', ' ')
+				lnStartPosition = This.FindAssignmentMatch(m.lcModified, ' cursor ', m.lcVariableName, 1)
 		
 			Case 'scatter ' = m.lcWord1 And ' name ' $ m.lcStatement
 				lnStartPosition = This.FindAssignmentMatch(m.lcStatement, ' name ', m.lcVariableName, 1)
@@ -1883,16 +1888,17 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 		* ================================================================================
 		*** JRN 2022-12-04 : Use AProcInfo to narrow the search
-		lnCount = Aprocinfo(laProcs, m.tcPRG, 1)
-		If m.lnCount = 0
-			Return
-		Endif
+		If Not Empty(m.tcPRG)
+			lnCount = Aprocinfo(laProcs, m.tcPRG, 1)
+			If m.lnCount = 0
+				Return
+			Endif
 		
-		If Ascan(m.laProcs, m.tcName, 1, -1, 1, 15) = 0
-			Return
+			If Ascan(m.laProcs, m.tcName, 1, -1, 1, 15) = 0
+				Return
+			Endif
 		Endif
 		* ================================================================================
-		
 		
 		lnCharPosition = This.GoToDefLocateLine (m.tcCode, m.tcName, 'DEFI(|N|NE)\s+CLAS(|S)')
 		If m.lnCharPosition > 0
