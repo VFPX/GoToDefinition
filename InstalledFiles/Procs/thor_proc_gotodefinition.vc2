@@ -11,8 +11,11 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 	#INCLUDE "gotodefinition.h"
 	*<DefinedPropArrayMethod>
 		*m: addmethodwithparameters
+		*m: blankoutcomments
 		*m: browsetable
 		*m: doformaddpem
+		*m: findassignment
+		*m: findassignmentmatch
 		*m: getaliasobject
 		*m: getallcode
 		*m: getallinheritedcode
@@ -22,6 +25,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		*m: getentireline
 		*m: getinheritedcode
 		*m: getobjectparentclasses
+		*m: getstatement
 		*m: getwindowname
 		*m: gogetparentobjectclasses
 		*m: gotoclassbyname
@@ -51,6 +55,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		*m: handleopenedfilename
 		*m: handlethisform
 		*m: handlethisinprg
+		*m: handlevariable
 		*m: ismenucode
 		*m: ismethodcode
 		*m: isprgfile
@@ -75,7 +80,10 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		*p: lfound
 		*p: lfullpath
 		*p: lsearched
+		*p: ncurrentline
 		*p: nlefthighlightpos
+		*p: nlineend
+		*p: nlinestart
 		*p: nrighthighlightpos
 		*p: nseconds
 		*p: nwindowtype
@@ -100,7 +108,10 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		lfullpath = .F.
 		lsearched = .F.
 		Name = "gotodefinition"
+		ncurrentline = 0
 		nlefthighlightpos = 0
+		nlineend = 0
+		nlinestart = 0
 		nrighthighlightpos = 0
 		nseconds = 0
 		nwindowtype = 0
@@ -180,6 +191,14 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 			<memberdata name="gotodeffindstem" display="GoToDefFindStem"/>
 			<memberdata name="getentireline" display="GetEntireLine"/>
 			<memberdata name="gotodefcontext" display="GoToDefContext"/>
+			<memberdata name="handlevariable" display="HandleVariable"/>
+			<memberdata name="ncurrentline" display="nCurrentLine"/>
+			<memberdata name="getstatement" display="GetStatement"/>
+			<memberdata name="blankoutcomments" display="BlankOutComments"/>
+			<memberdata name="nlinestart" display="nLineStart"/>
+			<memberdata name="nlineend" display="nLineEnd"/>
+			<memberdata name="findassignment" display="FindAssignment"/>
+			<memberdata name="findassignmentmatch" display="FindAssignmentMatch"/>
 		</VFPData>
 	*</PropValue>
 	
@@ -221,6 +240,18 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 	ENDPROC
 
+	PROCEDURE blankoutcomments
+		Lparameters lcText
+		
+		#Define InLineComment ('&' + '&')
+		
+		If InLineComment $ m.lcText
+			Return Padr(Left(m.lcText, At(InLineComment, m.lcText) - 1), Len(m.lcText))
+		Else
+			Return m.lcText
+		Endif
+	ENDPROC
+
 	PROCEDURE browsetable
 		Lparameters tcAlias
 		
@@ -242,6 +273,155 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		lcForm = Execscript (_Screen.cThorDispatcher, 'Full Path=Thor_Proc_AddPEM.SCX')
 		
 		Do Form (m.lcForm) With m.lcNewName, m.llRefreshGrid, m.lcPEMType, m.llStayOpen, m.lcMethodText
+		
+	ENDPROC
+
+	PROCEDURE findassignment
+		Lparameters lcStatement, lcVariableName
+		
+		Local laLocals[1], lcArrayFunc, lcArrayFunctions, lcModified, lcWord1, lcWord2, lnI, lnPos
+		Local lnStartPosition
+		
+		lnStartPosition = 0
+		
+		lcWord1	= Getwordnum(m.lcStatement, 1)
+		lcWord2	= Getwordnum(m.lcStatement, 2)
+		
+		If m.lcWord1 = '*'
+			Return 0
+		Endif
+		
+		Do Case
+		
+			Case ('procedure ' = m.lcWord1 Or 'function ' = m.lcWord1)				;
+					Or (('protected ' = m.lcWord1 Or 'hidden ' = m.lcWord1)			;
+					  And('procedure ' = m.lcWord2 Or 'function ' = m.lcWord2))
+				If '(' $ m.lcStatement
+					lcModified		= Chrtran(m.lcStatement, ')', ' ')
+					lnStartPosition	= This.FindAssignmentMatch(m.lcModified, '(', m.lcVariableName)
+				Endif
+		
+			Case 'parameters ' = m.lcWord1 Or 'lparameters ' = m.lcWord1
+				lnStartPosition = This.FindAssignmentMatch(m.lcStatement, m.lcWord1, m.lcVariableName)
+		
+			Case 'local ' = m.lcWord1 And 'array ' = m.lcWord2
+				lcModified		= Chrtran(m.lcStatement, '[]()', '    ')
+				lnStartPosition	= This.FindAssignmentMatch(m.lcModified, m.lcWord2, m.lcVariableName)
+		
+			Case 'local ' = m.lcWord1 or 'private ' = m.lcWord1 or 'public ' = m.lcWord1
+				lcModified		= Chrtran(m.lcStatement, '[]()', '    ')
+				lnStartPosition	= This.FindAssignmentMatch(m.lcModified, m.lcWord1, m.lcVariableName)
+		
+			Case 'dimension ' = m.lcWord1
+				lcModified		= Chrtran(m.lcStatement, '[]()', '    ')
+				lnStartPosition	= This.FindAssignmentMatch(m.lcModified, m.lcWord1, m.lcVariableName)
+		
+			Case ' to array ' $ m.lcStatement And(		;
+					  'copy ' = m.lcWord1				;
+					  Or 'scatter ' = m.lcWord1			;
+					  Or 'sum ' = m.lcWord1				;
+					  Or 'calculate ' = m.lcWord1		;
+					  Or 'average ' = m.lcWord1			;
+					  )
+				lnStartPosition = This.FindAssignmentMatch(m.lcStatement, ' to array ', m.lcVariableName, 1)
+		
+			Case ' to ' $ m.lcStatement And(			;
+					  'store ' = m.lcWord1				;
+					  Or 'calculate ' = m.lcWord1		;
+					  Or 'average ' = m.lcWord1			;
+					  Or 'sum ' = m.lcWord1				;
+					  Or 'count ' = m.lcWord1			;
+					  Or 'wait ' = m.lcWord1			;
+					  Or 'catch ' = m.lcWord1			;
+					  )
+				lnStartPosition = This.FindAssignmentMatch(m.lcStatement, ' to ', m.lcVariableName)
+		
+			Case 'catch ' = m.lcWord1 And 'to ' = m.lcWord2
+				lnStartPosition = This.FindAssignmentMatch(m.lcStatement, ' to ', m.lcVariableName, 1)
+		
+			Case 'text ' = m.lcWord1 And 'to ' = m.lcWord2
+				lnStartPosition = This.FindAssignmentMatch(m.lcStatement, ' to ', m.lcVariableName, 1)
+		
+			Case 'select ' = m.lcWord1 And ' into array ' $ m.lcStatement
+				lnStartPosition = This.FindAssignmentMatch(m.lcStatement, ' into array ', m.lcVariableName, 1)
+		
+			Case 'select ' = m.lcWord1 And ' into cursor ' $ m.lcStatement
+				lnStartPosition = This.FindAssignmentMatch(m.lcStatement, ' into cursor ', m.lcVariableName, 1)
+		
+			Case 'create ' = m.lcWord1 And ' cursor ' $ m.lcStatement
+				lcModified		= Chrtran(m.lcStatement, '(', ' ')
+				lnStartPosition = This.FindAssignmentMatch(m.lcModified, ' cursor ', m.lcVariableName, 1)
+		
+			Case 'scatter ' = m.lcWord1 And ' name ' $ m.lcStatement
+				lnStartPosition = This.FindAssignmentMatch(m.lcStatement, ' name ', m.lcVariableName, 1)
+		
+			Case 'for ' = m.lcWord1 And 'each ' = m.lcWord2
+				lnStartPosition = This.FindAssignmentMatch(m.lcStatement, ' each ', m.lcVariableName, 1)
+		
+			Case 'for ' = m.lcWord1
+				lcModified		= Chrtran(m.lcStatement, '=', ' ')
+				lnStartPosition	= This.FindAssignmentMatch(m.lcModified, 'for ', m.lcVariableName, 1)
+		
+			Case 'do ' = m.lcWord1 And 'form ' = m.lcWord2
+				lnStartPosition	= This.FindAssignmentMatch(m.lcStatement, ' name ', m.lcVariableName, 1)
+				lnStartPosition	= Max(m.lnStartPosition, This.FindAssignmentMatch(m.lcStatement, ' to ', m.lcVariableName, 1))
+		
+				* simple variable assignment
+			Case '=' $ m.lcStatement
+				lcModified = Left(m.lcStatement, Atc('=', m.lcStatement) - 1)
+				* further mods to handle simple indexed assignments
+				lcModified = Strtran(m.lcModified, Strextract(m.lcModified, '[', ']', 1, 7), '')
+				lcModified = Strtran(m.lcModified, Strextract(m.lcModified, '(', ')', 1, 7), '')
+				If Getwordcount(m.lcModified, ' ,') = 1
+					lnStartPosition	= This.FindAssignmentMatch('x = ' + m.lcModified, 'x = ', m.lcVariableName, 1) - 4
+				Endif
+		
+		Endcase
+		
+		* These must be handled after some of the case above, so best handled outside of Do Case
+		lcArrayFunctions = 'aclass,acopy,adatabases,adbobjects,adir,adlls,adockstate,aerror,aevents,afields,' ;
+			+ 'afont,agetclass,agetfileversion,ainstance,alanguage,alines,amembers,amouseobj,anetresources,aprinters,' ;
+			+ 'aprocinfo,aselobj,asessions,asqlhandles,astackinfo,ataginfo,aused,avcxclasses'
+		
+		For lnI = 1 To Getwordcount(m.lcArrayFunctions, ',')
+			lcArrayFunc = Getwordnum(m.lcArrayFunctions, m.lnI, ',')
+			*** JRN 2010-04-21 : check character before reference to make sure it is not part of a name ... laMouseObj, e.g.,
+			If m.lcArrayFunc + '(' $ m.lcStatement And m.lnStartPosition = 0
+				lnPos = At(m.lcArrayFunc + '(', m.lcStatement)
+				If Not This.IsNameChar(Substr(m.lcStatement, m.lnPos - 1, 1))
+					lnStartPosition	= This.FindAssignmentMatch(m.lcStatement, m.lcArrayFunc + '(', m.lcVariableName, Iif(m.lcArrayFunc = 'acopy', 2, 1))
+				Endif
+			Endif
+		Endfor
+		
+		
+		Return m.lnStartPosition
+	ENDPROC
+
+	PROCEDURE findassignmentmatch
+		Lparameters lcLine, lcDelimiter, lcVariableName, lnMaxCount
+		
+		Local lcVarList, lcWord, lnComma, lnI, lnPos, lnStartPos
+		
+		lnPos = At(m.lcDelimiter, m.lcLine)
+		If m.lnPos > 0
+			lnStartPos = m.lnPos + Len(m.lcDelimiter)
+			lcVarList  = Substr(m.lcLine, m.lnStartPos)
+			For lnI = 1 To Min(Getwordcount(m.lcVarList, ','), Evl(m.lnMaxCount, 999))
+				lcWord = Alltrim(Getwordnum(m.lcVarList, m.lnI, ','))
+				lcWord = Strtran(Getwordnum(m.lcWord, 1), 'm.', '')
+				If m.lcWord == m.lcVariableName
+					If m.lnI = 1
+						Return m.lnStartPos + At(m.lcVariableName, m.lcVarList) - 1
+					Else
+						lnComma = At(',', m.lcVarList, m.lnI - 1)
+						Return m.lnStartPos + m.lnComma + At(m.lcVariableName, Substr(m.lcVarList, m.lnComma + 1)) - 1
+					Endif
+				Endif
+			Endfor
+		Endif
+		
+		Return 0
 		
 	ENDPROC
 
@@ -668,6 +848,38 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 		
 		
+	ENDPROC
+
+	PROCEDURE getstatement
+		Local lcLine, lcPreviousLine, lcStatement, lnLineEnd, lnLineStart
+		
+		* must account for:
+		*	[1]  beginning of proc
+		*	[2]  beginning of code
+		
+		lnLineStart	= This.oEditorWin.GetByteOffset(This.nCurrentLine)
+		lnLineEnd	= This.oEditorWin.GetByteOffset(This.nCurrentLine + 1)
+		lcStatement	= This.BlankOutComments(This.oEditorWin.GetString(m.lnLineStart, m.lnLineEnd - 1))
+		
+		This.nLineStart	  = m.lnLineStart
+		This.nLineEnd     = m.lnLineEnd
+		This.nCurrentLine = This.nCurrentLine - 1
+		
+		Do While .T.
+			lnLineStart	   = This.oEditorWin.GetByteOffset(This.nCurrentLine)
+			lnLineEnd	   = This.oEditorWin.GetByteOffset(This.nCurrentLine + 1)
+			lcPreviousLine = This.BlankOutComments(This.oEditorWin.GetString(m.lnLineStart, m.lnLineEnd - 1))
+		
+			If ';' == Right(Trim(m.lcPreviousLine, 1, ' ', CR, LF, Tab), 1)
+				lcStatement		  = m.lcPreviousLine + m.lcStatement
+				This.nLineStart	  = m.lnLineStart
+				This.nCurrentLine = This.nCurrentLine - 1
+			Else
+				Return m.lcStatement
+			Endif
+		Enddo
+		
+		Return .F.
 	ENDPROC
 
 	PROCEDURE getwindowname
@@ -1668,15 +1880,15 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 	PROCEDURE gotodefprocessprgforclass
 		Lparameters tcPRG, tcName, toInclude, tcCode
 		
-		*** JRN 2010-12-17 : 
+		Local laProcs[1], lnCharPosition, lnCount
 		
-		Local lnCharPosition
+		If Atc(m.tcName, m.tcCode) = 0
+			Return
+		Endif
 		
 		* ================================================================================
 		*** JRN 2022-12-04 : Use AProcInfo to narrow the search
-		Local laProcs[1], lcCode, lnCharPosition, lnCount
-		
-		If not Empty(m.tcPRG)
+		If Not Empty(m.tcPRG)
 			lnCount = Aprocinfo(laProcs, m.tcPRG, 1)
 			If m.lnCount = 0
 				Return
@@ -1685,15 +1897,14 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 			If Ascan(m.laProcs, m.tcName, 1, -1, 1, 15) = 0
 				Return
 			Endif
-		EndIf
+		Endif
 		* ================================================================================
 		
-		
-		lnCharPosition = This.GoToDefLocateLine (tcCode, tcName, 'DEFI(|N|NE)\s+CLAS(|S)')
-		If lnCharPosition > 0
-			toInclude.File		   = tcPRG
-			toInclude.CharPosition = lnCharPosition
-		Endif lnCharPosition > 0
+		lnCharPosition = This.GoToDefLocateLine (m.tcCode, m.tcName, 'DEFI(|N|NE)\s+CLAS(|S)')
+		If m.lnCharPosition > 0
+			toInclude.File		   = m.tcPRG
+			toInclude.CharPosition = m.lnCharPosition
+		Endif m.lnCharPosition > 0
 		
 		Return
 		
@@ -2109,6 +2320,59 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 	ENDPROC
 
+	PROCEDURE handlevariable
+		Local lcStatement, lcVariableName, lcWord1, lcWord2, lnOffSet, lnPos
+		
+		If This.nWindowType = CommandWindow
+			Return .F.
+		Endif
+		
+		* map everything to lower case, just to simplify comparisons
+		* get the variable name, removing 'm.' if supplied
+		lcVariableName = Lower(This.cMethodName)
+		Do Case
+			Case Lower(m.lcVariableName) = 'm.' And Occurs('.', m.lcVariableName) = 1
+				lcVariableName = Substr(m.lcVariableName, 3)
+			Case '.' $ m.lcVariableName
+				Return .F.
+		Endcase
+		
+		This.nCurrentLine = This.oEditorWin.GetLineNumber(This.nLeftHighlightPos)
+		
+		*** JRN 2023-03-29 : This gets the current statement, which is ignored
+		*	and changes the pointer so that the next call will get the previous
+		lcStatement = This.GetStatement()
+		
+		Do While This.nCurrentLine >= 0
+			lcStatement = This.GetStatement()
+			If Atc(m.lcVariableName, m.lcStatement) # 0
+				lcStatement	= Lower(Chrtran(m.lcStatement, CR + LF + Tab + ';', '    '))
+				lnOffSet	= This.FindAssignment(m.lcStatement, m.lcVariableName)
+				If m.lnOffSet > 0
+					lnPos = This.nLineStart + m.lnOffSet - 1
+					This.oEditorWin.EnsureVisible(m.lnPos) && this apparently ensures that the line is visible
+					This.oEditorWin.Select(m.lnPos, m.lnPos + Len(m.lcVariableName))
+					Return .T.
+				Endif
+			Endif
+		
+			If This.nWindowType = PRGFile
+				lcWord1	= Getwordnum(m.lcStatement, 1)
+				lcWord2	= Getwordnum(m.lcStatement, 2)
+				If  ('procedure ' = m.lcWord1 Or 'function ' = m.lcWord1)				;
+						Or (('protected ' = m.lcWord1 Or 'hidden ' = m.lcWord1)			;
+						  And('procedure ' = m.lcWord2 Or 'function ' = m.lcWord2))
+					Return .F.
+				Endif
+			Endif
+		
+		Enddo
+		
+		Return .F.
+		
+		
+	ENDPROC
+
 	PROCEDURE Init
 		With This
 		
@@ -2261,37 +2525,13 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 	PROCEDURE quickaddpem
 		Lparameters llOnlyIfFormOrClass
 		
+		If m.llOnlyIfFormOrClass And 0 = Aselobj(laObjects) And 0 = Aselobj(laObjects, 1)
+			Messagebox (ccLOC_Title_DefNotFound, 64, 'GoToDefinition') 
+			Return
+		Endif
+		
 		This.DoFormAddPEM('', .T., '', .F., '')
 		
-		Return
-		
-		*!* ******** JRN Removed 2023-02-17 ********
-		*!* Local loForm As Object
-		*!* Local laObjects[1], lcFile, lnI, loTools
-		
-		*!* If m.llOnlyIfFormOrClass And 0 = Aselobj(laObjects) And 0 = Aselobj(laObjects, 1)
-		*!* 	Return
-		*!* Endif
-		
-		*!* For lnI = 1 To _Screen.FormCount
-		*!* 	loForm = _Screen.Forms[m.lnI]
-		*!* 	If Pemstatus(m.loForm, 'lAskAddPEM', 5) And m.loForm.lAskAddPEM
-		*!* 		m.loForm.Show()
-		*!* 		loForm = .Null.
-		*!* 		Return
-		*!* 	Endif
-		*!* Endfor
-		*!* loForm	= .Null.
-		
-		*!* *** JRN 2023-01-30 : Form to add PEMs in same folder as this class
-		*!* loTools	= Execscript (_Screen.cThorDispatcher, 'Class= tools from pemeditor')
-		*!* If Isnull(m.loTools)
-		*!* 	Return
-		*!* Endif
-		*!* lcFile = Forcepath('AskAddPEMNewStayOpen.SCX', Justpath(m.loTools.ClassLibrary))
-		*!* If File(m.lcFile)
-		*!* 	Do Form (m.lcFile) With, .T., , .T.
-		*!* Endif
 		
 	ENDPROC
 
@@ -2330,17 +2570,19 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 	ENDPROC
 
 	PROCEDURE run		&& Occurs when an Active Document is ready to execute your application code.
-		Local laObjects[1], llDone, llFailed, loTopOfForm
+		Local laObjects[1], llDone, llFailed, lnSeconds, loTopOfForm
 		
 		* ================================================================================
 		#Define clShowTimings .F.
 		#If clShowTimings
 			#Define ccRecordTimings This.Timing() And
+			?''
 		#Else
 			#Define ccRecordTimings
 		#Endif
 		* ================================================================================
 		
+		lnSeconds		 = Seconds()
 		This.nWindowType = This.oEditorWin.FindWindow()
 		
 		*** JRN 2022-11-27 : if not in a code window, possibly add new PEM
@@ -2421,6 +2663,11 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 				This.lFound	   = .T.
 				This.lSearched = .T.
 		
+				* if a variable defined above in code
+			Case ccRecordTimings This.HandleVariable()
+				This.lFound	   = .T.
+				This.lSearched = .T.
+		
 				* ================================================================================
 				*	Remainder of these are slower
 				* ================================================================================
@@ -2438,9 +2685,10 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 				This.lFound	   = .T.
 				This.lSearched = .T.
 		
-			Otherwise 
+			Otherwise
 				llFailed = ccRecordTimings .T.
-				Messagebox (Strtran (ccLOC_Cap_DefNotFound, '<insert>', This.cFullMethodName), 16, ccLOC_Title_DefNotFound, cnMB_TimeOut)
+				Messagebox (Strtran (ccLOC_Cap_DefNotFound, '<insert>', This.cFullMethodName)		;
+					  + CRLF + CRLF + Alltrim(Str(Seconds() - m.lnSeconds, 5, 1)) + ' seconds', 16, ccLOC_Title_DefNotFound, cnMB_TimeOut)
 		
 		Endcase
 		

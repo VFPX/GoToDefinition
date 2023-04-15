@@ -1,3 +1,15 @@
+### 2023-04-15, Version 2.10 ###
+
+- Search for variables in current procedure (assignments and index assignments)
+- Search for cursor creation in current procedure
+- VFP keyword search (click on first keyword)
+    - Do 
+    - Do Form
+    - Report Form
+    - NewObject
+    - CreateObject
+    - Local VarName as Class of Classlib
+    - Define Class ClassName1 AS ParentClass [OF ClassLibrary] 
 
 ### 2023-03-19, Version 2.015 ###
 
@@ -39,5 +51,7 @@ This version is a complete refactoring of the original Go To Definition (GTD). T
 * If you use GTD on the name of an object that actually exists (other than in the SCX or VCX you are editing), GTD will open **Object Explorer**. An example (although not a very useful one), would be to use GTD on _Screen.
 * GTD would seemingly have nothing to do if the active window is not a code window (the  form or class you are editing, the Property Window, Class Browser, PEM Editor, etc) or if the cursor is in white space in a code window.  In these cases, the "Add new PEM" window is opened.
 --- 
-Last changed: _2023-02-04_ ![Picture](./documents/Images/vfpxpoweredby_alternative.gif)
+Last changed: _2023-04-15_
+
+![Picture](./documents/Images/vfpxpoweredby_alternative.gif)
 
