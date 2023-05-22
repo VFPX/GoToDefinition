@@ -14,6 +14,7 @@ If Pemstatus(_Screen, 'aGoToDefBookmark', 5) = .F.
 Endif
 
 loEditorWin	= Execscript(_Screen.cThorDispatcher, 'Thor_Proc_EditorWin')
+
 loWindows	= m.loEditorWin.GetOpenWindows()
 CleanupList(m.loWindows) && Discard any bookmarks from no longer active windows
 
@@ -139,7 +140,7 @@ Endproc
 
 
 Procedure CleanupList(loWindows)
-	Local lcTitle, llActive, lnHandle, lnRow, lnRowCount, lnWindow, loThisWindow
+	Local lcTitle, lcWindowName, llActive, lnHandle, lnRow, lnRowCount, lnWindow, loThisWindow
 
 	lnRowCount = GetRowCount()
 	For lnRow = m.lnRowCount To 2 Step - 1
@@ -149,7 +150,8 @@ Procedure CleanupList(loWindows)
 
 		For lnWindow = 1 To m.loWindows.Count
 			loThisWindow = m.loWindows(m.lnWindow)
-			If m.lnHandle = m.loThisWindow.nWHAndle And m.lcTitle == m.loThisWindow.WindowName && check if still active
+			lcWindowName = Alltrim(m.loThisWindow.WindowName, 1, ' ', '*')
+			If m.lnHandle = m.loThisWindow.nWHAndle And m.lcTitle == m.lcWindowName && check if still active
 				llActive = .T.
 			Endif
 		Endfor
@@ -168,3 +170,4 @@ Procedure GetRowCount
 Endproc
 
 
+ 

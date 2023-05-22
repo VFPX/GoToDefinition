@@ -1,8 +1,8 @@
 lparameters toUpdateObject
 
 with toUpdateObject
-	.VersionNumber    = '2.10 - 20230415'
-	.AvailableVersion = 'GoToDefinition-2.10-08505-20230415'
+	.VersionNumber    = '2.11 - 20230522'
+	.AvailableVersion = 'GoToDefinition-2.11-08542-20230522'
 	.Component        = 'No'
 	.Notes            = GetNotes()
 endwith
@@ -13,6 +13,10 @@ return toUpdateObject
 procedure GetNotes
 local lcNotes
 text to lcNotes noshow
+### 2023-05-22, Version 2.11 ###
+
+Bug fix: bookmarks failed on windows where code is edited ('*' in the titlebar)
+
 ### 2023-04-15, Version 2.10 ###
 
 - Search for variables in current procedure (assignments and index assignments)

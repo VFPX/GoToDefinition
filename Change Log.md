@@ -1,3 +1,7 @@
+### 2023-05-22, Version 2.11 ###
+
+Bug fix: bookmarks failed on windows where code is edited ('*' in the titlebar)
+
 ### 2023-04-15, Version 2.10 ###
 
 - Search for variables in current procedure (assignments and index assignments)
