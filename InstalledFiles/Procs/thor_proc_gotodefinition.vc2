@@ -2145,8 +2145,8 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 				This.lFound	   = This.GoToDefCreateObject ()
 				This.lSearched = .T.
 		
-				* LOCAL
-			Case Upper (This.cMethodName) == 'LOCAL'
+				* LOCAL or PUBLIC
+			Case Upper (This.cMethodName) == 'LOCAL' or Upper (This.cMethodName) == 'PUBLIC'
 				This.lFound	   = This.GoToDefLocal ()
 				This.lSearched = .T.
 		

@@ -1,3 +1,7 @@
+### 2023-05-25, Version 2.12 ###
+
+Enhancement to handle:   PUBLIC SomeName AS type OF ClassLib
+
 ### 2023-05-22, Version 2.11 ###
 
 Bug fix: bookmarks failed on windows where code is edited ('*' in the titlebar)
