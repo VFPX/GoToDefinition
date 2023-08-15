@@ -13,6 +13,7 @@ If Pcount() = 1								;
 
 		* Required
 		.Prompt			 = 'Add/Remove BookMark'
+		.AppID 			 = 'GoToDefinition'
 		.Source			 = 'Thor Repository'
 		.Category		 = 'Go To'
 		.Author			 = 'Jim Nelson'

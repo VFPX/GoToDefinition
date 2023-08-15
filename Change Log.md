@@ -1,3 +1,7 @@
+### 2023-08-15, Version 2.13 ###
+
+Add new property .AppID to all tools to identify the project they originate in.
+
 ### 2023-05-25, Version 2.12 ###
 
 Enhancement to handle:   PUBLIC SomeName AS type OF ClassLib
