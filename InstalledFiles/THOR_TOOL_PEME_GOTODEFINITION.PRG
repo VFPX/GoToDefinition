@@ -13,6 +13,7 @@ If Pcount() = 1								;
 
 		* Required
 		.Prompt             = 'GoToDefinition' && used when tool appears in a menu
+		.AppID              = 'GoToDefinition'
 		Text To .Description Noshow
 Go to the definition of the name under the cursor, which can be any of :
   - a method
