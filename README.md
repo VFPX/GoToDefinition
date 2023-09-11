@@ -50,6 +50,7 @@ The example below demonstrates all of these rules, as the name being searched fo
 		* VCX
 		* FRX
 	* Name of a procedure or function in a PRG
+	* Name of a class
 	* Alias of a table that is open
 	* Alias of a table that can be opened (possibly augmented by customization)
 	* Name of an existing object
@@ -57,11 +58,11 @@ The example below demonstrates all of these rules, as the name being searched fo
 		* NEWOBJECT
 		* CREATEOBJECT
 		* LOCAL
-	* Name of an object defined in Alias Dictionary
 	* Constants (from #Include and #Define)
 	* Variables (assigned in same procedure)
 	* Cursors (created in same procedure)
- 
+	* Name of an object defined in Alias Dictionary
+	
 * VFP Keywords (Click on the keyword -- the first one, if there are two)
 	* DO
 	* DO FORM
