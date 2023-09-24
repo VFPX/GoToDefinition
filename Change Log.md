@@ -1,3 +1,7 @@
+### 2023-09-24, Version 2.13B ###
+
+Fix bug with handling of LOCAL, PRIVATE, and PUBLIC statements
+
 ### 2023-08-15, Version 2.13 ###
 
 Add new property .AppID to all tools to identify the project they originate in.
