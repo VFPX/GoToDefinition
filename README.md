@@ -1,6 +1,6 @@
 # GoToDefinition
 
-Version 2.13 Released 2023-08-15
+Version 2.13B Released 2023-09-24
 
 [What's new in this release](Change%20Log.md)
 

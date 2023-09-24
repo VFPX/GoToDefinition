@@ -1708,7 +1708,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		
 		lnStartPos = This.oEditorWin.GetLineStart (This.nRightHighlightPos, 0)
 		lnEndPos   = This.oEditorWin.GetLineStart (This.nRightHighlightPos, 1)
-		lcCommand  = This.oEditorWin.GetString (m.lnStartPos, m.lnEndPos)
+		lcCommand  = Chrtran(This.oEditorWin.GetString (m.lnStartPos, m.lnEndPos), CR + LF + Tab, '   ') 
 		
 		lcCLass	   = Chrtran(Getwordnum(m.lcCommand, 4), ['"] + '[]', '')
 		lcClassLib = ''
@@ -2146,7 +2146,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 				This.lSearched = .T.
 		
 				* LOCAL or PUBLIC
-			Case Upper (This.cMethodName) == 'LOCAL' or Upper (This.cMethodName) == 'PUBLIC'
+			Case InList(Upper (This.cMethodName) + ' ', 'LOCAL ', 'PRIVATE ', 'PUBLIC ') 
 				This.lFound	   = This.GoToDefLocal ()
 				This.lSearched = .T.
 		
