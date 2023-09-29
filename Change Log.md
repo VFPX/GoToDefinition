@@ -1,3 +1,7 @@
+### 2023-09-29, Version 2.14 ###
+
+Using GTD on an object created by an assignment using NewObject or CreateObject now goes directly to the object, rather than the assignment.
+
 ### 2023-09-24, Version 2.13B ###
 
 Fix bug with handling of LOCAL, PRIVATE, and PUBLIC statements
