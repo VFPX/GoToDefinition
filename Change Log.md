@@ -1,3 +1,7 @@
+### 2023-10-07, Version 2.14B ###
+
+Fixed bug in v2.14 when using GTD on an object created by an assignment using NewObject or CreateObject
+
 ### 2023-09-29, Version 2.14 ###
 
 Using GTD on an object created by an assignment using NewObject or CreateObject now goes directly to the object, rather than the assignment.
