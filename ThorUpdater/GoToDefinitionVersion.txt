@@ -1,8 +1,8 @@
 lparameters toUpdateObject
 
 with toUpdateObject
-	.VersionNumber    = '2.14 - 20230929'
-	.AvailableVersion = 'GoToDefinition-2.14-08672-20230929'
+	.VersionNumber    = '2.14B - 20231007'
+	.AvailableVersion = 'GoToDefinition-2.14B-08680-20231007'
 	.Component        = 'No'
 	.Notes            = GetNotes()
 endwith

@@ -1279,22 +1279,26 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 	ENDPROC
 
 	PROCEDURE gotodefcreateobject
-		Local lcClass, lcText, lnEndPos
+		Lparameters lcText
 		
-		lnEndPos = This.oEditorWin.GetLineStart (This.nRightHighlightPos, 1)
-		lcText	 = This.oEditorWin.GetString (This.nRightHighlightPos + 1, lnEndPos)
+		Local laLines[1], lcClass, lnEndPos
 		
-		If '(' $ lcText
-			lcText = Substr (lcText, 1 + At ('(', lcText))
+		If Empty(m.lcText)
+			lnEndPos = This.oEditorWin.GetLineStart (This.nRightHighlightPos, 1)
+			lcText	 = This.oEditorWin.GetString (This.nRightHighlightPos + 1, m.lnEndPos)
 		Endif
 		
-		If ')' $ lcText
-			lcText = Left (lcText, At (')', lcText) - 1)
+		If '(' $ m.lcText
+			lcText = Substr (m.lcText, 1 + At ('(', m.lcText))
 		Endif
 		
-		If Alines (laLines, lcText, .T., ',', ';') >= 1
-			lcClass	   = This.RemoveQuotes (Alltrim (laLines(1)))
-			Return This.GoToDefFindClass (lcClass)
+		If ')' $ m.lcText
+			lcText = Left (m.lcText, At (')', m.lcText) - 1)
+		Endif
+		
+		If Alines (laLines, m.lcText, .T., ',', ';') >= 1
+			lcClass	   = This.RemoveQuotes (Alltrim (m.laLines(1)))
+			Return This.GoToDefFindClass (m.lcClass)
 		Else
 			Return .F.
 		Endif
@@ -1762,10 +1766,14 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 	ENDPROC
 
 	PROCEDURE gotodefnewobject
-		Local laLines[1], lcClass, lcClassLib, lcFullName, lcText, llSuccess, lnCount, lnEndPos
+		Lparameters lcText
 		
-		lnEndPos = This.oEditorWin.GetLineStart (This.nRightHighlightPos, 1)
-		lcText	 = This.oEditorWin.GetString (This.nRightHighlightPos + 1, m.lnEndPos)
+		Local laLines[1], lcClass, lcClassLib, lcFullName, llSuccess, lnCount, lnEndPos
+		
+		If Empty(m.lcText)
+			lnEndPos = This.oEditorWin.GetLineStart (This.nRightHighlightPos, 1)
+			lcText	 = This.oEditorWin.GetString (This.nRightHighlightPos + 1, m.lnEndPos)
+		Endif
 		
 		llSuccess = .F.
 		If '(' $ m.lcText
@@ -2321,7 +2329,8 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 	ENDPROC
 
 	PROCEDURE handlevariable
-		Local lcStatement, lcVariableName, lcWord1, lcWord2, lnOffSet, lnPos
+		Local lcFirstWord, lcParams, lcRemainder, lcStatement, lcVariableName, lcWord1, lcWord2, lnOffSet
+		Local lnPos
 		
 		If This.nWindowType = CommandWindow
 			Return .F.
@@ -2349,10 +2358,30 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 				lcStatement	= Lower(Chrtran(m.lcStatement, CR + LF + Tab + ';', '    '))
 				lnOffSet	= This.FindAssignment(m.lcStatement, m.lcVariableName)
 				If m.lnOffSet > 0
-					lnPos = This.nLineStart + m.lnOffSet - 1
-					This.oEditorWin.EnsureVisible(m.lnPos) && this apparently ensures that the line is visible
-					This.oEditorWin.Select(m.lnPos, m.lnPos + Len(m.lcVariableName))
-					Return .T.
+		
+					*** JRN 2023-10-02 : looking for assignments to via NewObject of CreateObject
+					lcRemainder	= Upper(Alltrim(Substr(m.lcStatement, m.lnOffSet + Len(m.lcVariableName) + 1)))
+					lcFirstWord	= Alltrim(Strextract(m.lcRemainder, '=', '(', 1), 1, ' ', Tab)
+					lcParams	= Strextract(m.lcRemainder, '(', ')', 1, 4)
+		
+					Do Case
+						Case m.lcRemainder = '=' and m.lcFirstWord = 'NEWOBJECT'
+							If This.GoToDefNewObject(m.lcParams)
+								Return .T.
+							Endif
+		
+						Case m.lcRemainder = '=' and m.lcFirstWord = 'CREATEOBJECT'
+							If This.GoToDefCreateObject(m.lcParams)
+								Return .T.
+							Endif
+		
+						Otherwise
+		
+							lnPos = This.nLineStart + m.lnOffSet - 1
+							This.oEditorWin.EnsureVisible(m.lnPos) && this apparently ensures that the line is visible
+							This.oEditorWin.Select(m.lnPos, m.lnPos + Len(m.lcVariableName))
+							Return .T.
+					Endcase
 				Endif
 			Endif
 		
