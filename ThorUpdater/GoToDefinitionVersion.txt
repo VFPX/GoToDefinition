@@ -1,8 +1,8 @@
 lparameters toUpdateObject
 
 with toUpdateObject
-	.VersionNumber    = '2.14B - 20231007'
-	.AvailableVersion = 'GoToDefinition-2.14B-08680-20231007'
+	.VersionNumber    = '2.14C - 20231027'
+	.AvailableVersion = 'GoToDefinition-2.14C-08700-20231027'
 	.Component        = 'No'
 	.Notes            = GetNotes()
 endwith
@@ -13,6 +13,10 @@ return toUpdateObject
 procedure GetNotes
 local lcNotes
 text to lcNotes noshow
+### 2023-10-07, Version 2.14C ###
+
+Fixed bug in v2.14 when using GTD file name that is a relative path.
+
 ### 2023-10-07, Version 2.14B ###
 
 Fixed bug in v2.14 when using GTD on an object created by an assignment using NewObject or CreateObject
