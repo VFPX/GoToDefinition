@@ -1,3 +1,7 @@
+### 2023-10-07, Version 2.14C ###
+
+Fixed bug when using file name that is a relative path.
+
 ### 2023-10-07, Version 2.14B ###
 
 Fixed bug in v2.14 when using GTD on an object created by an assignment using NewObject or CreateObject

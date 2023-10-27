@@ -1530,7 +1530,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		Endif
 		
 		If File (m.lcFileName)
-			This.EditSourceX (m.lcFileName)
+			This.EditSourceX (FullPath(m.lcFileName))
 			Return .T.
 		Endif
 		
