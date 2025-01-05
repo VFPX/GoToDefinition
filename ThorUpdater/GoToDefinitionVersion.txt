@@ -1,8 +1,8 @@
 lparameters toUpdateObject
 
 with toUpdateObject
-	.VersionNumber    = '2.14C - 20231027'
-	.AvailableVersion = 'GoToDefinition-2.14C-08700-20231027'
+	.VersionNumber    = '2.15 - 20250105'
+	.AvailableVersion = 'GoToDefinition-2.15-09136-20250105'
 	.Component        = 'No'
 	.Notes            = GetNotes()
 endwith
@@ -13,9 +13,13 @@ return toUpdateObject
 procedure GetNotes
 local lcNotes
 text to lcNotes noshow
+### 2025-01-05, Version 2.15 ###
+
+Fixed bug which occurred when attempting to create a new method and invoking GoToDef too quickly after the closing paren.
+
 ### 2023-10-07, Version 2.14C ###
 
-Fixed bug in v2.14 when using GTD file name that is a relative path.
+Fixed bug when using file name that is a relative path.
 
 ### 2023-10-07, Version 2.14B ###
 

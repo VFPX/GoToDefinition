@@ -1,3 +1,7 @@
+### 2025-01-05, Version 2.15 ###
+
+Fixed bug which occurred when attempting to create a new method and invoking GoToDef too quickly after the closing paren.
+
 ### 2023-10-07, Version 2.14C ###
 
 Fixed bug when using file name that is a relative path.

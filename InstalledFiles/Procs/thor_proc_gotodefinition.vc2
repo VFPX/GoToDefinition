@@ -58,6 +58,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		*m: handlevariable
 		*m: ismenucode
 		*m: ismethodcode
+		*m: isobject
 		*m: isprgfile
 		*m: isreadonly
 		*m: peme_findtopmostparent
@@ -199,6 +200,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 			<memberdata name="nlineend" display="nLineEnd"/>
 			<memberdata name="findassignment" display="FindAssignment"/>
 			<memberdata name="findassignmentmatch" display="FindAssignmentMatch"/>
+			<memberdata name="isobject" display="IsObject"/>
 		</VFPData>
 	*</PropValue>
 	
@@ -2078,7 +2080,7 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 					This.lSearched = .F.
 		
 					* pointing to name of an existing object
-				Case (Not '.' $ m.lcObjectName) and 'O' = Type(m.lcObjectName) And 'O' = Vartype(&lcObjectName)
+				Case This.IsObject(m.lcObjectName)
 					Execscript(_Screen.cThorDispatcher, 'Thor_Tool_ObjectExplorer', &lcObjectName)
 					This.lFound	   = .T.
 					This.lSearched = .T.
@@ -2421,6 +2423,32 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		Return This.nWindowType = MethodCode
 	ENDPROC
 
+	PROCEDURE isobject
+		Lparameters lcObjectName
+		
+		Local llIsObject, loException
+		
+		llIsObject = .F.
+		Do Case
+			Case '.' $ m.lcObjectName				;
+					Or '(' $ m.lcObjectName			;
+					Or '[' $ m.lcObjectName			;
+					Or '&' $ m.lcObjectName
+		
+			Case 'O' # Type(m.lcObjectName)
+		
+			Otherwise
+				Try
+					llIsObject  = 'O' = Vartype(&lcObjectName)
+				Catch To m.loException
+		
+				Endtry
+		
+		Endcase
+		
+		Return m.llIsObject
+	ENDPROC
+
 	PROCEDURE isprgfile
 		Return This.nWindowType = PRGFile
 	ENDPROC
@@ -2605,7 +2633,6 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		#Define clShowTimings .F.
 		#If clShowTimings
 			#Define ccRecordTimings This.Timing() And
-			?''
 		#Else
 			#Define ccRecordTimings
 		#Endif
