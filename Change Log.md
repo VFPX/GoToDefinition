@@ -1,3 +1,7 @@
+### 2025-01-07, Version 2.16 ###
+
+Fixed bug which occurred when attempting to create a new method and there is highlighted text beginning with a left paren. (#33)
+
 ### 2025-01-05, Version 2.15 ###
 
 Fixed bug which occurred when attempting to create a new method and invoking GoToDef too quickly after the closing paren.

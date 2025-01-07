@@ -1,8 +1,8 @@
 lparameters toUpdateObject
 
 with toUpdateObject
-	.VersionNumber    = '2.15 - 20250105'
-	.AvailableVersion = 'GoToDefinition-2.15-09136-20250105'
+	.VersionNumber    = '2.16 - 20250107'
+	.AvailableVersion = 'GoToDefinition-2.16-09138-20250107'
 	.Component        = 'No'
 	.Notes            = GetNotes()
 endwith
@@ -13,6 +13,10 @@ return toUpdateObject
 procedure GetNotes
 local lcNotes
 text to lcNotes noshow
+### 2025-01-07, Version 2.16 ###
+
+Fixed bug which occurred when attempting to create a new method and there is highlighted text beginning with a left paren. (#33)
+
 ### 2025-01-05, Version 2.15 ###
 
 Fixed bug which occurred when attempting to create a new method and invoking GoToDef too quickly after the closing paren.
