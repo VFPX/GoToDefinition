@@ -618,10 +618,14 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 			Endif
 		
 			* remove trailing garbage characters
-			If '(' $ m.lcResult && first, anything after a (
-				lnSelEnd = m.lnSelStart + At ('(', m.lcResult) - 1
-				lcResult = This.oEditorWin.GetString (m.lnSelStart, m.lnSelEnd - 1)
-			Endif
+			Do Case
+				Case Left(m.lcResult, 1) = '('
+					lnSelEnd = m.lnSelStart
+					lcResult = ''
+				Case '(' $ m.lcResult && first, anything after a (
+					lnSelEnd = m.lnSelStart + At ('(', m.lcResult) - 1
+					lcResult = This.oEditorWin.GetString (m.lnSelStart, m.lnSelEnd - 1)
+			Endcase
 		
 			*!* ******************** Removed 11/18/2014 *****************
 			*!* lnSelStart = lnSelEnd
