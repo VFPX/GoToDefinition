@@ -2278,6 +2278,8 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 						This.cMethodName = Left (This.cWonTop, Rat ('.', This.cWonTop) - 1) + m.lcMethod
 					Case This.cWonTop = Upper (m.laObjects(1).Name + '.') && matches current object?
 						This.cMethodName = This.GetObjectPath (m.laObjects(1)) + m.lcMethod
+					Case This.cWonTop = Upper (m.loTopOfForm.Name + '.') && matches form being edited?
+						This.cMethodName = m.lcMethod
 					Otherwise
 						This.cMethodName = Left (This.cWonTop, At ('.', This.cWonTop) - 1) + m.lcMethod
 				Endcase
