@@ -1,8 +1,8 @@
 lparameters toUpdateObject
 
 with toUpdateObject
-	.VersionNumber    = '2.16 - 20250107'
-	.AvailableVersion = 'GoToDefinition-2.16-09138-20250107'
+	.VersionNumber    = '2.17 - 20250114'
+	.AvailableVersion = 'GoToDefinition-2.17-09145-20250114'
 	.Component        = 'No'
 	.Notes            = GetNotes()
 endwith
@@ -13,6 +13,12 @@ return toUpdateObject
 procedure GetNotes
 local lcNotes
 text to lcNotes noshow
+### 2025-01-14, Version 2.17 ###
+
+Fixed bug where using GoToDef on `This.SomeMethod` would do nothing under some circumstances: (#35)
+- In a form (or form based class), in a method for the form itself (and thus `ThisForm.SomeMethod` would be equivalent).
+- AND the currently selected object (as appears in the Properties Window) is an object in the form (but not the form itself)
+
 ### 2025-01-07, Version 2.16 ###
 
 Fixed bug which occurred when attempting to create a new method and there is highlighted text beginning with a left paren. (#33)
