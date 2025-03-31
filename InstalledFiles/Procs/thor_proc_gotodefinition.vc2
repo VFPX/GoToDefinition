@@ -2299,8 +2299,8 @@ DEFINE CLASS gotodefinition AS basecustom OF "thor_proc_gotodef_base.vcx"
 		If Not This.lSearched
 			If  '.' $ This.cMethodName
 				lcObjectName = Upper (Juststem (This.cMethodName))
-				If m.lcObjectName # '.' And Not Empty (m.lcObjectName)
-					lcObjectName = '.' + m.lcObjectName
+				If '.' $ m.lcObjectName
+					lcObjectName = Substr(m.lcObjectName, At('.', m.lcObjectName))
 				Endif
 				lcMethod	= Justext (This.cMethodName)
 				This.lFound	= This.GoToDef (m.loTopOfForm, m.lcObjectName, m.lcMethod, m.loTopOfForm, This.lDoDefault)
