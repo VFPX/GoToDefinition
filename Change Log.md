@@ -1,3 +1,7 @@
+### 2025-03-31, Version 2.18 ###
+
+Fixed bug where using GoToDef on `This.SomeMethod` would do nothing when the titlebar for the method included the timestamp when last changed (#35).  This timestamp is displayed when the method was opened using PEMEditor or created by GoToDef.
+
 ### 2025-01-14, Version 2.17 ###
 
 Fixed bug where using GoToDef on `This.SomeMethod` would do nothing under some circumstances: (#35)
