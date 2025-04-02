@@ -5,6 +5,8 @@
 *< FOXBIN2PRG: Version="1.19" SourceFile="thor_proc_addpem.scx" /> (Solo para binarios VFP 9 / Only for VFP 9 binaries)
 *
 *
+#INCLUDE "gotodefinition.h"
+
 DEFINE CLASS addpem AS form 
  	*< CLASSDATA: Baseclass="form" Timestamp="" Scale="" Uniqueid="" />
 
@@ -24,6 +26,7 @@ DEFINE CLASS addpem AS form
 	*< OBJECTDATA: ObjPath="Check1" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Check2" UniqueID="" Timestamp="" />
 	*< OBJECTDATA: ObjPath="Cmdaddnewpem1" UniqueID="" Timestamp="" />
+	*< OBJECTDATA: ObjPath="Label2" UniqueID="" Timestamp="" />
 
 	*<DefinedPropArrayMethod>
 		*m: addtockl
@@ -67,7 +70,7 @@ DEFINE CLASS addpem AS form
 		cvalue = 
 		DoCreate = .T.
 		FontSize = 9
-		Height = 262
+		Height = 280
 		laccess = .F.
 		laskaddpem = .T.
 		lassign = .F.
@@ -75,10 +78,8 @@ DEFINE CLASS addpem AS form
 		lrefreshgrid = .F.
 		lreturnvalue = .F.
 		lstayopen = .F.
-		MaxHeight = 350
-		MaxWidth = 350
-		MinHeight = 215
-		MinWidth = 246
+		MinHeight = 280
+		MinWidth = 302
 		Name = "AddPEM"
 		nresult = 0
 		oprefs = .F.
@@ -128,7 +129,7 @@ DEFINE CLASS addpem AS form
 		Height = 0, ;
 		Left = 0, ;
 		Name = "Baseline1", ;
-		Top = 226, ;
+		Top = 233, ;
 		Width = 306
 		*< END OBJECT: BaseClass="line" />
 
@@ -141,7 +142,7 @@ DEFINE CLASS addpem AS form
 		Left = 13, ;
 		Name = "Check1", ;
 		TabIndex = 7, ;
-		Top = 203, ;
+		Top = 206, ;
 		Width = 60
 		*< END OBJECT: BaseClass="checkbox" />
 
@@ -154,7 +155,7 @@ DEFINE CLASS addpem AS form
 		Left = 83, ;
 		Name = "Check2", ;
 		TabIndex = 8, ;
-		Top = 203, ;
+		Top = 206, ;
 		Width = 60
 		*< END OBJECT: BaseClass="checkbox" />
 
@@ -165,7 +166,7 @@ DEFINE CLASS addpem AS form
 		Left = 90, ;
 		Name = "cmdAddasMethod", ;
 		TabIndex = 3, ;
-		Top = 230
+		Top = 237
 		*< END OBJECT: BaseClass="commandbutton" />
 
 	ADD OBJECT 'cmdAddasMethod2' AS commandbutton WITH ;
@@ -175,7 +176,7 @@ DEFINE CLASS addpem AS form
 		Left = 184, ;
 		Name = "cmdAddasMethod2", ;
 		TabIndex = 2, ;
-		Top = 230
+		Top = 237
 		*< END OBJECT: BaseClass="commandbutton" />
 
 	ADD OBJECT 'cmdAddasProperty' AS commandbutton WITH ;
@@ -187,7 +188,7 @@ DEFINE CLASS addpem AS form
 		Left = 7, ;
 		Name = "cmdAddasProperty", ;
 		TabIndex = 1, ;
-		Top = 230, ;
+		Top = 237, ;
 		Width = 71
 		*< END OBJECT: BaseClass="commandbutton" />
 
@@ -198,7 +199,7 @@ DEFINE CLASS addpem AS form
 		Left = 170, ;
 		Name = "Cmdaddnewpem1", ;
 		TabIndex = 2, ;
-		Top = 200
+		Top = 203
 		*< END OBJECT: BaseClass="commandbutton" />
 
 	ADD OBJECT 'cntDescription' AS container WITH ;
@@ -243,6 +244,18 @@ DEFINE CLASS addpem AS form
 		Top = 1, ;
 		Width = 29, ;
 		ZOrderSet = 8
+		*< END OBJECT: BaseClass="label" />
+
+	ADD OBJECT 'Label2' AS label WITH ;
+		Alignment = 0, ;
+		Anchor = 14, ;
+		Caption = "Label2", ;
+		FontSize = 8, ;
+		Height = 17, ;
+		Left = 14, ;
+		Name = "Label2", ;
+		Top = 265, ;
+		Width = 283
 		*< END OBJECT: BaseClass="label" />
 
 	ADD OBJECT 'lblTitle' AS label WITH ;
@@ -383,6 +396,10 @@ DEFINE CLASS addpem AS form
 			.BindControls  = .T.
 		
 			.Refresh()
+			
+			If Empty(lcNewName)
+				This.txtNewName.SetFocus()
+			EndIf 
 		Endwith
 		
 	ENDPROC
@@ -538,6 +555,10 @@ DEFINE CLASS addpem AS form
 			.ForeColor = Iif(lnLength <= 254, Rgb(0,0,0), Rgb(255,0,0))
 		Endwith
 		
+	ENDPROC
+
+	PROCEDURE Label2.Init
+		This.Caption = VERSION_NUMBER
 	ENDPROC
 
 	PROCEDURE txtNewName.Refresh
